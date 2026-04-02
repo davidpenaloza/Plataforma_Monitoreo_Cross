@@ -1,0 +1,80 @@
+# Matriz de mapeo y backlog técnico (segunda pasada)
+
+> Estructura: `producto | capa | componente | variable dashboard | función KQL propuesta | prioridad | criticidad | estado actual | observación`.
+
+| producto | capa | componente | variable dashboard | función KQL propuesta | prioridad | criticidad | estado actual | observación |
+|---|---|---|---|---|---|---|---|---|
+| AMSA CROSS | global | ppfm_global | var_amsa_rep_ppfm_global | fn_mon_amsa_ppfm_global | P1 | Alta | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| ANTUCOYA | ingestas | MT_ingesta_global | var_ant_MT_ingesta_global | fn_mon_ant_MT_ingesta_global | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| ANTUCOYA | procesamiento | MT_procesamiento | var_ant_MT_procesamiento | fn_mon_ant_MT_procesamiento | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| ANTUCOYA | procesamiento | siroAcido_procesamiento | var_ant_siroAcido_procesamiento | fn_mon_ant_siroAcido_procesamiento | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| ANTUCOYA | front | siroApilamiento_front | var_ant_siroApilamiento_front | fn_mon_ant_siroApilamiento_front | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| CENTINELA | detalle | ada_dispatch | var_cent_ada_dispatch | fn_mon_cent_ada_dispatch | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | ada_front | var_cent_ada_front | fn_mon_cent_ada_front | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | ada_jigsaw | var_cent_ada_jigsaw | fn_mon_cent_ada_jigsaw | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | ada_pi | var_cent_ada_pi | fn_mon_cent_ada_pi | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | ada_planes | var_cent_ada_planes | fn_mon_cent_ada_planes | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | ada_proc | var_cent_ada_proc | fn_mon_cent_ada_proc | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | global | ada | var_cent_ada_status | fn_mon_cent_ada | P1 | Alta | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | ingestas | cesmec | var_cent_cesmec | fn_mon_cent_cesmec | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | ingestas | dispatch | var_cent_dispatch | fn_mon_cent_dispatch | P1 | Alta | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | ingestas | envirosuit | var_cent_envirosuit | fn_mon_cent_envirosuit | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | ingestas | jigsaw | var_cent_jigsaw | fn_mon_cent_jigsaw | P1 | Alta | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | ingestas | meteodata | var_cent_meteodata | fn_mon_cent_meteodata | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mp10_cesmec | var_cent_mp10_cesmec | fn_mon_cent_mp10_cesmec | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mp10_dispatch | var_cent_mp10_dispatch | fn_mon_cent_mp10_dispatch | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mp10_envirosuit | var_cent_mp10_envirosuit | fn_mon_cent_mp10_envirosuit | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mp10_front | var_cent_mp10_front | fn_mon_cent_mp10_front | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mp10_jigsaw | var_cent_mp10_jigsaw | fn_mon_cent_mp10_jigsaw | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mp10_meteodata | var_cent_mp10_meteodata | fn_mon_cent_mp10_meteodata | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mp10_proc | var_cent_mp10_proc | fn_mon_cent_mp10_proc | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mp10_smartroad | var_cent_mp10_smartroad | fn_mon_cent_mp10_smartroad | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | global | mp10 | var_cent_mp10_status | fn_mon_cent_mp10 | P1 | Alta | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mtox_front | var_cent_mtox_front | fn_mon_cent_mtox_front | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mtox_jigsaw | var_cent_mtox_jigsaw | fn_mon_cent_mtox_jigsaw | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mtox_planes | var_cent_mtox_planes | fn_mon_cent_mtox_planes | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mtox_proc | var_cent_mtox_proc | fn_mon_cent_mtox_proc | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | global | mtox | var_cent_mtox_status | fn_mon_cent_mtox | P1 | Alta | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mtox_thiess | var_cent_mtox_thiess | fn_mon_cent_mtox_thiess | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mtox_vulcan | var_cent_mtox_vulcan | fn_mon_cent_mtox_vulcan | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mtsulf_dispatch | var_cent_mtsulf_dispatch | fn_mon_cent_mtsulf_dispatch | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mtsulf_jigsaw | var_cent_mtsulf_jigsaw | fn_mon_cent_mtsulf_jigsaw | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mtsulf_planes | var_cent_mtsulf_planes | fn_mon_cent_mtsulf_planes | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mtsulf_proc | var_cent_mtsulf_proc | fn_mon_cent_mtsulf_proc | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | global | mtsulf | var_cent_mtsulf_status | fn_mon_cent_mtsulf | P1 | Alta | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | mtsulf_vulcan | var_cent_mtsulf_vulcan | fn_mon_cent_mtsulf_vulcan | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | ingestas | pi | var_cent_pi | fn_mon_cent_pi | P1 | Alta | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | ingestas | planes | var_cent_planes | fn_mon_cent_planes | P1 | Alta | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | global | siro_flot | var_cent_siro_flot_status | fn_mon_cent_siro_flot | P1 | Alta | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | siro_mol_front | var_cent_siro_mol_front | fn_mon_cent_siro_mol_front | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | siro_mol_pi | var_cent_siro_mol_pi | fn_mon_cent_siro_mol_pi | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | detalle | siro_mol_proc | var_cent_siro_mol_proc | fn_mon_cent_siro_mol_proc | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | global | siro_mol | var_cent_siro_mol_status | fn_mon_cent_siro_mol | P1 | Alta | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | ingestas | smartroad | var_cent_smartroad | fn_mon_cent_smartroad | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | ingestas | vulcan | var_cent_vulcan | fn_mon_cent_vulcan | P1 | Alta | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CENTINELA | ingestas | wenco | var_cent_wenco | fn_mon_cent_wenco | P2 | Media | Fallback transitorio (constant) | Variable temporal para estabilizar render; migrar a wrapper KQL. |
+| CMZ REPORTE | transformacion | reporte_ejecutivo | var_cmz_repEjecutivo_transformacion | fn_mon_cmz_rep_transformacion | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP ADA | procesamiento | alarm | var_mlp_ada_alarm | fn_mon_mlp_ada_procesamiento_alarm | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP ADA | ingestas | blockgrade | var_mlp_ada_blockgrade | fn_mon_mlp_ada_ingestas_blockgrade | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP ADA | ingestas | drillit | var_mlp_ada_drillit | fn_mon_mlp_ada_ingestas_drillit | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP ADA | front | front | var_mlp_ada_front | fn_mon_mlp_ada_front_front | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP ADA | global | global | var_mlp_ada_global | fn_mon_mlp_ada_global | P2 | Alta | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP ADA | ingestas | ingestas | var_mlp_ada_ingestas_global | fn_mon_mlp_ada_ingestas_global | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP ADA | procesamiento | kpi | var_mlp_ada_kpi | fn_mon_mlp_ada_procesamiento_kpi | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP ADA | ingestas | meteodata | var_mlp_ada_meteodata | fn_mon_mlp_ada_ingestas_meteodata | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP ADA | ingestas | pi | var_mlp_ada_pi | fn_mon_mlp_ada_ingestas_pi | P2 | Alta | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP ADA | ingestas | plans | var_mlp_ada_plans | fn_mon_mlp_ada_ingestas_plans | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP PDM CAEX | ingestas | dispatch | var_mlp_pdmcaex_dispatch | fn_mon_mlp_pdmcaex_ingestas_dispatch | P2 | Alta | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP PDM CAEX | front | front | var_mlp_pdmcaex_front | fn_mon_mlp_pdmcaex_front_front | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP PDM CAEX | global | global | var_mlp_pdmcaex_global | fn_mon_mlp_pdmcaex_global | P2 | Alta | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP PDM CAEX | ingestas | horometros | var_mlp_pdmcaex_horometros | fn_mon_mlp_pdmcaex_ingestas_horometros | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP PDM CAEX | ingestas | minecare | var_mlp_pdmcaex_minecare | fn_mon_mlp_pdmcaex_ingestas_minecare | P2 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP NASH | ingestas | pi | var_mlp_pi_nash | fn_mon_mlp_nash_ingestas_pi | P3 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP NASH | recomendacion | prediccion | var_mlp_prediccion_nash | fn_mon_mlp_nash_recomendacion_prediccion | P3 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP SIRO POTENCIA | transformacion | transformacion | var_mlp_siroPotencia_transformacion | fn_mon_mlp_siropotencia_transformacion | P2 | Alta | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP SIRO POTENCIA | front | front | var_mlp_siropotencia_front | fn_mon_mlp_siropotencia_front | P2 | Alta | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP SIRO POTENCIA | ingestas | ingesta | var_mlp_siropotencia_ingesta | fn_mon_mlp_siropotencia_ingestas | P2 | Alta | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP SIRO SAG | global | global | var_mlp_sirosag_global | fn_mon_mlp_sirosag_global | P2 | Alta | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP SIRO SAG | ingestas | ingesta | var_mlp_sirosag_ingesta | fn_mon_mlp_sirosag_ingestas | P2 | Alta | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP SIRO SAG | transformacion | transformacion | var_mlp_sirosag_transformacion | fn_mon_mlp_sirosag_transformacion | P2 | Alta | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
+| MLP NASH | transformacion | transformacion | var_mlp_transf_nash | fn_mon_mlp_nash_transformacion_transformacion | P3 | Media | Operativa (query) | Variable activa; candidata a encapsular lógica repetida en función externa. |
