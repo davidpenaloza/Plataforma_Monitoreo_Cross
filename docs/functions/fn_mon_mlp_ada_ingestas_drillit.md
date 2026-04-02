@@ -4,10 +4,10 @@
 `fn_mon_mlp_ada_ingestas_drillit`
 
 ## Objetivo
-Entregar señal ingestas para MLP ADA consumible por el dashboard cross vía var_mlp_ada_drillit.
+Obtener estado de **ingestas** para ADA MLP basado en la query oficial actualizada compartida por el equipo.
 
 ## Tipo de función
-**estado actual**.
+**estado actual** (ejecutiva / chips cross).
 
 ## Workspace objetivo
 `ams-uat-dataplatform-laws`
@@ -16,17 +16,14 @@ Entregar señal ingestas para MLP ADA consumible por el dashboard cross vía var
 - `var_mlp_ada_drillit`
 
 ## Contrato de salida esperado
-La función debe retornar 1 fila con:
 - `status`
 - `color`
 - `evidence`
 - `last_update_utc`
 
 ## Resource a usar desde Grafana
-**Resource principal:** `ams-uat-dataplatform-laws`.
-
-Referencia esperada:
-`/subscriptions/0d996eb2-802f-4ef8-8ae6-d385c74da7e6/resourceGroups/ams-uat-dataplatform-rg/providers/Microsoft.OperationalInsights/workspaces/ams-uat-dataplatform-laws`
+- `ams-uat-dataplatform-laws`
+- `/subscriptions/0d996eb2-802f-4ef8-8ae6-d385c74da7e6/resourceGroups/ams-uat-dataplatform-rg/providers/Microsoft.OperationalInsights/workspaces/ams-uat-dataplatform-laws`
 
 ## Query wrapper en Grafana
 ```kql
@@ -43,72 +40,135 @@ fn_mon_mlp_ada_ingestas_drillit()
 ```
 
 ## Fuente probable
-Azure Monitor Logs / Log Analytics
+Azure Monitor Logs / Log Analytics.
 
-## Tabla(s) probable(s)
-AzureDiagnostics, ContainerAppConsoleLogs_CL, ContainerAppSystemLogs_CL, Filtered_ContainerAppSystemLogs_CL
+## Tabla probable
+- `ContainerAppSystemLogs_CL`
+- `AzureDiagnostics`
+- `ContainerAppConsoleLogs_CL`
 
 ## Regla operacional esperada
-- Evaluar la señal más reciente por fuente/tabla relevante de MLP ADA.
-- `status` es la señal principal para chip/card.
-- `color` deriva de `status` (`ALERT` rojo, `OK` verde, `WARN` reservado).
-- Si no hay timestamp usable, marcar condición de riesgo en `evidence` y elevar a `ALERT`.
+Componente Drillit (ADF_drillit_ingestion).
 
 ## Supuestos
-1. Las señales de MLP ADA están disponibles en el workspace `ams-uat-dataplatform-laws`.
-2. Cuando existe `payload.ultimo_timestamp`, representa tiempo de dato y puede convertirse a UTC.
-3. `TimeGenerated` funciona como fallback de estado actual.
+1. Se adopta como base oficial el bloque `statusFuentes` + mapas/umbrales entregados por el equipo.
+2. Para funciones ejecutivas se usa estado actual (no ventana de Grafana).
+3. Los bloques `KPIs`, `Alarmas`, `Front` requieren completar integración con `statusKpisAlarms` y `AlertarFront` del query oficial completo.
 
 ## Limitaciones
-1. Requiere validar con datos reales los filtros exactos por componente y los umbrales operativos.
-2. Algunos dominios pueden requerir tablas adicionales no visibles en la variable actual.
-3. Esta propuesta evita función histórica; si se necesita tendencia, se debe crear función separada.
+1. Algunas señales (KPIs/Alarmas/Front) dependen de secciones adicionales del query oficial y necesitan validación con datos reales.
+2. Debe validarse el set exacto de columnas pivot en `statusFuentes` para evitar nulos por cambios de job.
 
-## KQL propuesta (lista para pegar en Logs y guardar manualmente como función)
+## KQL propuesta (basada en query oficial ADA)
 ```kql
-// fn_mon_mlp_ada_ingestas_drillit
-// Tipo: estado actual. Diseñada para ejecución en estado actual (sin $__timeFrom/$__timeTo).
+let endQuery = bin(now(), 1m);
+let startQuery = endQuery - 2d;
+let mapContainerJobs_MLP_ADA_Refactor = dynamic(
+{
+    "mlp-prd-caj-meteo-job01": "job01_meteo",
+    "mlp-prd-caj-meteo-job02": "job02_meteo",
+    "mlp-prd-caj-pisystem-job01": "job01_pisystem",
+    "mlp-prd-caj-pisystem-job02": "job02_pisystem",
+    "mlp-prd-caj-plans-job01": "job01_plans",
+    "ams-prd-caj-genshare-job01": "job01_optimizador_mezcla",
+    "DISPATCH": "ADF_dispatch_ingestion",
+    "DRILLIT": "ADF_drillit_ingestion",
+    "BLOCKGRADE": "ADF_blockgrade_ingestion",
+    "mlp-prd-caj-prfci-job01": "job01_settings",
+    "mlp-prd-caj-prfci-job02": "job02_settings"
+});
+let mapUmbralAlerta = dynamic(
+{
+    "mlp-prd-caj-meteo-job01": 35,
+    "mlp-prd-caj-meteo-job02": 35,
+    "mlp-prd-caj-pisystem-job01": 25,
+    "mlp-prd-caj-pisystem-job02": 25,
+    "mlp-prd-caj-plans-job01": 25,
+    "ams-prd-caj-genshare-job01": 1440,
+    "DISPATCH": 35,
+    "DRILLIT": 35,
+    "BLOCKGRADE": 60,
+    "mlp-prd-caj-prfci-job01": 60,
+    "mlp-prd-caj-prfci-job02": 120
+});
+let maxUmbral = toscalar(
+    range dummy from 1 to 1 step 1
+    | extend values = mapUmbralAlerta
+    | mv-expand values
+    | extend value = todouble(replace_string(tostring(split(values, ":")[1]), "}", ""))
+    | summarize max(value)
+);
+let bins_expected_logs =
+    range TimeGeneratedBin_Chile from startQuery - totimespan(maxUmbral * 60s) to endQuery step 1m
+    | extend TimeGeneratedBin_Chile = bin(TimeGeneratedBin_Chile, 1m)
+    | extend ["expected_mlp-prd-caj-meteo-job01"] = iff(datetime_part("minute", TimeGeneratedBin_Chile) % 15 == 0, 1, 0),
+             ["expected_mlp-prd-caj-meteo-job02"] = iff(datetime_part("minute", TimeGeneratedBin_Chile) in (1,16,31,46), 1, 0),
+             ["expected_mlp-prd-caj-pisystem-job01"] = 1,
+             ["expected_mlp-prd-caj-pisystem-job02"] = iff(datetime_part("minute", TimeGeneratedBin_Chile) in (1,11,21,31,41,51), 1, 0),
+             ["expected_mlp-prd-caj-plans-job01"] = iff(datetime_part("minute", TimeGeneratedBin_Chile) == 46 and datetime_part("hour", TimeGeneratedBin_Chile) in (0,1,6,13,17,18,19), 1, 0),
+             ["expected_ams-prd-caj-genshare-job01"] = iff(datetime_part("hour", TimeGeneratedBin_Chile) == 23 and datetime_part("minute", TimeGeneratedBin_Chile) == 5, 1, 0),
+             ["expected_DISPATCH"] = iff(datetime_part("minute", TimeGeneratedBin_Chile) in (6,16,26,36,46,56), 1, 0),
+             ["expected_DRILLIT"] = iff(datetime_part("minute", TimeGeneratedBin_Chile) in (1,11,21,31,41,51), 1, 0),
+             ["expected_BLOCKGRADE"] = iff(datetime_part("minute", TimeGeneratedBin_Chile) in (2,32), 1, 0),
+             ["expected_mlp-prd-caj-prfci-job01"] = iff(datetime_part("minute", TimeGeneratedBin_Chile) in (0), 1, 0),
+             ["expected_mlp-prd-caj-prfci-job02"] = iff(datetime_part("minute", TimeGeneratedBin_Chile) == 0 and datetime_part("hour", TimeGeneratedBin_Chile) in (12,18), 1, 0)
+    | project TimeGeneratedBin_Chile, allValues=pack_all()
+    | mv-expand allValues
+    | extend nombreEsperado = tostring(bag_keys(allValues)[0])
+    | extend valorEsperado = toint(allValues[nombreEsperado])
+    | where nombreEsperado startswith "expected_"
+    | project TimeGeneratedBin_Chile, nombreEsperado, valorEsperado;
+let bins_real_data =
+    union
+        (ContainerAppSystemLogs_CL
+            | where TimeGenerated >= startQuery - totimespan(maxUmbral * 60s) and TimeGenerated < endQuery
+            | where (JobName_s startswith "mlp-prd-" or JobName_s startswith "ams-prd-")
+            | where Log_s contains "has successfully completed"
+            | project TimeGenerated, nombreReal = JobName_s, valorReal = 1),
+        (AzureDiagnostics
+            | where TimeGenerated >= startQuery - totimespan(maxUmbral * 60s) and TimeGenerated < endQuery
+            | where Category == "PipelineRuns"
+            | where OperationName in ("PL_FULL - Succeeded", "PL_BLOCKGRADE - Succeeded")
+            | extend nombreReal = iff(ResourceGroup == "MLP-PRD-RG-BLKGRDE", "BLOCKGRADE", replace_string(ResourceGroup, "MLP-PRD-RG-", ""))
+            | project TimeGenerated, nombreReal, valorReal = 1)
+    | summarize valorReal = sum(valorReal) by nombreReal, TimeGeneratedBin_Chile = bin(TimeGenerated, 1m)
+    | extend nombreEsperado = strcat("expected_", nombreReal);
+let statusFuentes =
+    bins_expected_logs
+    | join kind=leftouter bins_real_data on TimeGeneratedBin_Chile, nombreEsperado
+    | extend nombreReal = replace_string(nombreEsperado, "expected_", "")
+    | extend valorReal = coalesce(valorReal, 0)
+    | extend umbralAlerta = todouble(mapUmbralAlerta[nombreReal])
+    | extend range = range(TimeGeneratedBin_Chile, TimeGeneratedBin_Chile + totimespan(umbralAlerta * 60s), 1m)
+    | mv-expand range to typeof(datetime)
+    | summarize valorAccReal=sum(valorReal), valorAccEsperado=sum(valorEsperado) by TimeGeneratedBin_Chile=range, nombreReal
+    | where TimeGeneratedBin_Chile < endQuery
+    | summarize status_base = iff(countif(valorAccReal == 0 and valorAccEsperado != 0) > 0, "a", "-") by TimeGeneratedBin_Chile=bin(TimeGeneratedBin_Chile, 15m), nombreReal
+    | extend status = iff(status_base == "a", "ALERT", "OK")
+    | summarize status = iff(countif(status == "ALERT") > 0, "ALERT", "OK") by TimeGeneratedBin_Chile, nombreReal
+    | extend nombreReal = tostring(mapContainerJobs_MLP_ADA_Refactor[nombreReal])
+    | evaluate pivot(nombreReal, take_any(status), TimeGeneratedBin_Chile)
+    | order by TimeGeneratedBin_Chile desc
+    | take 1;
 
-let source_data =
-    union isfuzzy=true
-        (SparkLoggingEvent_CL | extend _table_name="SparkLoggingEvent_CL"),
-        (ContainerAppSystemLogs_CL | extend _table_name="ContainerAppSystemLogs_CL"),
-        (ContainerAppConsoleLogs_CL | extend _table_name="ContainerAppConsoleLogs_CL"),
-        (AzureDiagnostics | extend _table_name="AzureDiagnostics")
-    | where TimeGenerated >= ago(48h)
-    // Ajustar filtro de dominio/componente para MLP ADA - ingestas
-    | where tostring(*) has_any ("MLP", "PDM_CAEX", "SIRO", "NASH", "ADA")
-    | summarize arg_max(TimeGenerated, *) by _table_name;
+// Derivación explícita por componente basada en query oficial ADA.
+let signals =
+    statusFuentes
+    | extend Dispatch = iff(tostring(ADF_dispatch_ingestion) == "ALERT", "ALERT", "OK")
+    | extend PI = iff(tostring(job01_pisystem) == "ALERT" or tostring(job02_pisystem) == "ALERT", "ALERT", "OK")
+    | extend Drillit = iff(tostring(ADF_drillit_ingestion) == "ALERT", "ALERT", "OK")
+    | extend Blockgrade = iff(tostring(ADF_blockgrade_ingestion) == "ALERT", "ALERT", "OK")
+    | extend Plans = iff(tostring(job01_plans) == "ALERT", "ALERT", "OK")
+    | extend Meteo = iff(tostring(job01_meteo) == "ALERT" or tostring(job02_meteo) == "ALERT", "ALERT", "OK")
+    | extend Settings = iff(tostring(job01_settings) == "ALERT" or tostring(job02_settings) == "ALERT", "ALERT", "OK")
+    // KPIs/Alarmas/Front requieren bloques adicionales del query oficial (statusKpisAlarms/AlertarFront)
+    | extend KPIs = "OK", Alarmas = "OK", Front = "OK";
 
-let evaluated =
-    source_data
-    | extend event_ts_utc = TimeGenerated
-    | extend payload = parse_json(tostring(column_ifexists("Message", "")))
-    | extend payload_ts_raw = tostring(payload.ultimo_timestamp)
-    | extend payload_ts_utc = datetime_local_to_utc(todatetime(payload_ts_raw), "America/Santiago")
-    | extend reference_ts_utc = coalesce(payload_ts_utc, event_ts_utc)
-    | extend ts_origin = iff(isnotnull(payload_ts_utc), "payload.ultimo_timestamp", "TimeGenerated")
-    | extend alertar_raw = tostring(payload.alertar)
-    | extend alertar_norm = replace_string(tolower(trim(' "\t\r\n', alertar_raw)), "í", "i")
-    | extend alertar_flag = alertar_norm in ("si", "true", "1", "yes", "alert", "alerta")
-    | extend diff_min_signed = datetime_diff('minute', now(), reference_ts_utc)
-    | extend delay_min = iff(diff_min_signed < 0, 0, diff_min_signed)
-    | extend status_source = case(
-        isnull(reference_ts_utc), "ALERT",
-        alertar_flag, "ALERT",
-        delay_min > 120, "ALERT",   // umbral inicial conservador; ajustar con regla de negocio
-        "OK"
-    )
-    | extend evidence_source = strcat(_table_name, "{status=", status_source, ",ts_origin=", ts_origin, ",delay_min=", tostring(delay_min), "}");
-
-evaluated
-| summarize
-    has_alert = max(iif(status_source == "ALERT", 1, 0)),
-    evidence_alert = strcat_array(make_list_if(evidence_source, status_source == "ALERT"), " | "),
-    evidence_all = strcat_array(make_list(evidence_source), " | "),
-    last_update_utc = max(event_ts_utc)
-| extend status = iff(has_alert == 1, "ALERT", "OK")
-| extend color = case(status == "ALERT", "#E53935", status == "WARN", "#FFF4CC", "#EAF4EA")
-| extend evidence = iff(status == "ALERT", evidence_alert, strcat("OK:", evidence_all))
+signals
+| extend status_global = Drillit
+| extend status = iff(status_global == "ALERT", "ALERT", "OK")
+| extend color = case(status == "ALERT", "#E53935", "#EAF4EA")
+| extend evidence = strcat("component=fn_mon_mlp_ada_ingestas_drillit; source=statusFuentes_oficial_ada")
+| extend last_update_utc = now()
 | project status, color, evidence, last_update_utc
 ```
