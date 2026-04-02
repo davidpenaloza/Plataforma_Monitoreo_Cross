@@ -2,6 +2,29 @@
 
 **Workspace objetivo de creación manual:** `ams-uat-dataplatform-laws`.
 
+## 0) Regla operativa de creación manual (nueva política del proyecto)
+
+Para funciones KQL en Azure Monitor / Log Analytics Workspace:
+
+- **No usar** `.create-or-alter function` como instrucción principal de creación.
+- Asumir creación manual desde **Logs > Save > Save as function**.
+- Toda propuesta debe incluir (mínimo):
+  1. nombre sugerido,
+  2. folder sugerido,
+  3. descripción/docstring sugerida,
+  4. cuerpo de query listo para pegar,
+  5. contrato de salida (`status`, `color`, `evidence`, `last_update_utc`),
+  6. objetivo,
+  7. tipo (`estado actual` vs `histórico`),
+  8. variable(s) Grafana que alimenta,
+  9. fuente probable,
+  10. tabla probable,
+  11. supuestos,
+  12. limitaciones,
+  13. fallback documentado.
+
+---
+
 ## 1) Criterios de diseño
 
 1. Mantener convención `fn_mon_<faena>_<producto>_<capa>[_<componente>]`.
@@ -351,107 +374,116 @@ format_tables
   - `abs(Diferencia_Minutos) > umbral`.
 - Estado global actual: si cualquier fuente está en `ALERT`, el color final queda rojo (`#E53935`), en caso contrario verde (`#EAF4EA`).
 
-### 7.3 Función KQL propuesta real
+### 7.3 Ficha normalizada (estándar manual) para `fn_mon_mlp_pdmcaex_global`
+
+1. **Nombre sugerido de la función:** `fn_mon_mlp_pdmcaex_global`.
+2. **Folder sugerido:** `monitoreo/mlp/pdmcaex`.
+3. **Descripción/docstring sugerida:**
+   `Estado global actual PDM CAEX para dashboard cross (status, color, evidence, last_update_utc).`
+4. **Objetivo explícito:** evaluar el estado global de `HOROMETROS`, `MINECARE` y `DISPATCH` y devolver una señal única para chip ejecutivo.
+5. **Tipo de función:** `estado actual` (no histórica).
+6. **Variable(s) de Grafana que alimenta:** `var_mlp_pdmcaex_global`.
+7. **Fuente probable:** Azure Monitor Logs / Log Analytics.
+8. **Tabla probable:** `SparkLoggingEvent_CL`.
+9. **Contrato de salida esperado:** `status`, `color`, `evidence`, `last_update_utc`.
+10. **Supuestos:**
+   - `payload.ultimo_timestamp` está en horario local Chile cuando existe.
+   - `TimeGenerated` es fallback válido para estado actual.
+   - Si no hay timestamp usable por fuente, debe tratarse como riesgo operativo.
+11. **Limitaciones:**
+   - Dependencia de formato JSON en `Message`.
+   - Posible variabilidad en valores de `payload.alertar`.
+   - Umbrales actuales podrían requerir recalibración con datos reales.
+12. **Fallback documentado:**
+   - timestamp principal: `payload.ultimo_timestamp` parseado y convertido a UTC.
+   - fallback: `TimeGenerated`.
+   - si ambos fallan: `source_status = ALERT` con `reason=timestamp_missing`.
+13. **Cuerpo de query listo para pegar en Logs (Save as function):**
 
 ```kql
-.create-or-alter function with (
-  folder = "monitoreo/mlp/pdmcaex",
-  docstring = "Estado global actual PDM CAEX para dashboard cross (status, color, evidence, last_update_utc)."
-)
-fn_mon_mlp_pdmcaex_global() {
-    // -----------------------------------------------------------------------
-    // Función de estado ACTUAL (no histórica):
-    // - Evalúa la última señal disponible por fuente.
-    // - No usa $__timeFrom/$__timeTo porque su objetivo es pintar chip ejecutivo actual.
-    // -----------------------------------------------------------------------
+// fn_mon_mlp_pdmcaex_global
+// Tipo: estado actual (no usar $__timeFrom/$__timeTo)
 
-    let thresholds = datatable(fuente:string, umbral_min:int)
-    [
-        "HOROMETROS", 10080,
-        "MINECARE",      40,
-        "DISPATCH",      70
-    ];
+let thresholds = datatable(fuente:string, umbral_min:int)
+[
+    "HOROMETROS", 10080,
+    "MINECARE",      40,
+    "DISPATCH",      70
+];
 
-    let latest_by_source =
-        SparkLoggingEvent_CL
-        | where log_logger_s == "PDM_CAEX"
-        | where Message has_any ("HOROMETROS", "MINECARE", "DISPATCH")
-        | extend fuente_detectada = case(
-            Message has "HOROMETROS", "HOROMETROS",
-            Message has "MINECARE",   "MINECARE",
-            Message has "DISPATCH",   "DISPATCH",
-            "OTRA"
-        )
-        | where fuente_detectada in ("HOROMETROS", "MINECARE", "DISPATCH")
-        | summarize arg_max(TimeGenerated, *) by fuente_detectada
-        | extend payload = parse_json(Message)
-        | extend fuente_payload = toupper(tostring(payload.fuente))
-        | extend fuente = iff(isempty(fuente_payload), fuente_detectada, fuente_payload)
-
-        // Timestamp principal (si existe y parsea): payload.ultimo_timestamp (local Chile -> UTC)
-        | extend payload_ts_raw = tostring(payload.ultimo_timestamp)
-        | extend payload_ts_utc = datetime_local_to_utc(todatetime(payload_ts_raw), "America/Santiago")
-
-        // Fallback de timestamp: TimeGenerated del evento
-        | extend event_ts_utc = TimeGenerated
-        | extend reference_ts_utc = coalesce(payload_ts_utc, event_ts_utc)
-        | extend ts_origin = iff(isnotnull(payload_ts_utc), "payload.ultimo_timestamp", "TimeGenerated")
-
-        // Normalización robusta de 'alertar'
-        | extend alertar_raw = tostring(payload.alertar)
-        | extend alertar_norm = tolower(trim(' "\t\r\n', alertar_raw))
-        | extend alertar_norm = replace_string(alertar_norm, "í", "i")
-        | extend alertar_flag = alertar_norm in ("si", "true", "1", "yes", "alert", "alerta")
-
-        // Diferencia en minutos respecto a now() usando referencia temporal validada.
-        // No usar abs(): diferencias negativas pueden evidenciar desalineación de reloj/timezone.
-        | extend diff_min_signed = datetime_diff('minute', now(), reference_ts_utc)
-        | extend delay_min = iff(diff_min_signed < 0, 0, diff_min_signed)
-        | project fuente, umbral_placeholder = 0, event_ts_utc, reference_ts_utc, ts_origin,
-                  diff_min_signed, delay_min, alertar_norm, alertar_flag;
-
-    let evaluated =
-        thresholds
-        | join kind=leftouter latest_by_source on fuente
-        | extend has_ts = isnotnull(reference_ts_utc)
-        | extend source_status = case(
-            has_ts == false, "ALERT",                           // sin timestamp usable => riesgo operativo
-            alertar_flag == true, "ALERT",                      // alerta explícita del payload
-            delay_min > umbral_min, "ALERT",                    // atraso por umbral
-            "OK"
-        )
-        | extend source_reason = case(
-            has_ts == false, "timestamp_missing",
-            alertar_flag == true, strcat("alertar=", alertar_norm),
-            delay_min > umbral_min, strcat("delay_min=", tostring(delay_min), " > ", tostring(umbral_min)),
-            diff_min_signed < 0, strcat("future_ts_skew_min=", tostring(-1 * diff_min_signed)),
-            "ok"
-        )
-        | extend source_evidence = strcat(
-            fuente,
-            "{status=", source_status,
-            ",reason=", source_reason,
-            ",ts_origin=", coalesce(ts_origin, "none"),
-            ",ref_ts=", iff(isnull(reference_ts_utc), "null", tostring(reference_ts_utc)),
-            ",event_ts=", iff(isnull(event_ts_utc), "null", tostring(event_ts_utc)),
-            "}"
-        );
-
-    evaluated
-    | summarize
-        has_alert = max(iif(source_status == "ALERT", 1, 0)),
-        evidence_alert = strcat_array(make_list_if(source_evidence, source_status == "ALERT"), " | "),
-        evidence_all = strcat_array(make_list(source_evidence), " | "),
-        last_update_utc = max(event_ts_utc)
-    | extend status = iff(has_alert == 1, "ALERT", "OK")
-    | extend color = case(
-        status == "ALERT", "#E53935",
-        status == "WARN",  "#FFF4CC",
-        "#EAF4EA"
+let latest_by_source =
+    SparkLoggingEvent_CL
+    | where log_logger_s == "PDM_CAEX"
+    | where Message has_any ("HOROMETROS", "MINECARE", "DISPATCH")
+    | extend fuente_detectada = case(
+        Message has "HOROMETROS", "HOROMETROS",
+        Message has "MINECARE",   "MINECARE",
+        Message has "DISPATCH",   "DISPATCH",
+        "OTRA"
     )
-    | extend evidence = iff(status == "ALERT", evidence_alert, strcat("OK:", evidence_all))
-    | project status, color, evidence, last_update_utc
-}
+    | where fuente_detectada in ("HOROMETROS", "MINECARE", "DISPATCH")
+    | summarize arg_max(TimeGenerated, *) by fuente_detectada
+    | extend payload = parse_json(Message)
+    | extend fuente_payload = toupper(tostring(payload.fuente))
+    | extend fuente = iff(isempty(fuente_payload), fuente_detectada, fuente_payload)
+    // timestamp principal
+    | extend payload_ts_raw = tostring(payload.ultimo_timestamp)
+    | extend payload_ts_utc = datetime_local_to_utc(todatetime(payload_ts_raw), "America/Santiago")
+    // fallback
+    | extend event_ts_utc = TimeGenerated
+    | extend reference_ts_utc = coalesce(payload_ts_utc, event_ts_utc)
+    | extend ts_origin = iff(isnotnull(payload_ts_utc), "payload.ultimo_timestamp", "TimeGenerated")
+    // normalización alertar
+    | extend alertar_raw = tostring(payload.alertar)
+    | extend alertar_norm = tolower(trim(' "\t\r\n', alertar_raw))
+    | extend alertar_norm = replace_string(alertar_norm, "í", "i")
+    | extend alertar_flag = alertar_norm in ("si", "true", "1", "yes", "alert", "alerta")
+    // diferencia con signo (no abs)
+    | extend diff_min_signed = datetime_diff('minute', now(), reference_ts_utc)
+    | extend delay_min = iff(diff_min_signed < 0, 0, diff_min_signed)
+    | project fuente, event_ts_utc, reference_ts_utc, ts_origin, diff_min_signed, delay_min, alertar_norm, alertar_flag;
+
+let evaluated =
+    thresholds
+    | join kind=leftouter latest_by_source on fuente
+    | extend has_ts = isnotnull(reference_ts_utc)
+    | extend source_status = case(
+        has_ts == false, "ALERT",
+        alertar_flag == true, "ALERT",
+        delay_min > umbral_min, "ALERT",
+        "OK"
+    )
+    | extend source_reason = case(
+        has_ts == false, "timestamp_missing",
+        alertar_flag == true, strcat("alertar=", alertar_norm),
+        delay_min > umbral_min, strcat("delay_min=", tostring(delay_min), " > ", tostring(umbral_min)),
+        diff_min_signed < 0, strcat("future_ts_skew_min=", tostring(-1 * diff_min_signed)),
+        "ok"
+    )
+    | extend source_evidence = strcat(
+        fuente,
+        "{status=", source_status,
+        ",reason=", source_reason,
+        ",ts_origin=", coalesce(ts_origin, "none"),
+        ",ref_ts=", iff(isnull(reference_ts_utc), "null", tostring(reference_ts_utc)),
+        ",event_ts=", iff(isnull(event_ts_utc), "null", tostring(event_ts_utc)),
+        "}"
+    );
+
+evaluated
+| summarize
+    has_alert = max(iif(source_status == "ALERT", 1, 0)),
+    evidence_alert = strcat_array(make_list_if(source_evidence, source_status == "ALERT"), " | "),
+    evidence_all = strcat_array(make_list(source_evidence), " | "),
+    last_update_utc = max(event_ts_utc)
+| extend status = iff(has_alert == 1, "ALERT", "OK")
+| extend color = case(
+    status == "ALERT", "#E53935",
+    status == "WARN",  "#FFF4CC",
+    "#EAF4EA"
+)
+| extend evidence = iff(status == "ALERT", evidence_alert, strcat("OK:", evidence_all))
+| project status, color, evidence, last_update_utc
 ```
 
 ### 7.4 Wrapper delgado para la variable Grafana
@@ -464,19 +496,15 @@ fn_mon_mlp_pdmcaex_global()
 
 ### 7.5 Metadata de implementación solicitada
 
-- **Fuente probable:** Azure Monitor Logs / Log Analytics.
-- **Tabla probable:** `SparkLoggingEvent_CL`.
+- **Regla detectada:** ALERT global si al menos una fuente (`HOROMETROS`, `MINECARE`, `DISPATCH`) queda en ALERT.
 - **Tipo de validación esperada:**
   - Visual: chip cambia de color en Capa 2.
   - Funcional: `status` coincide con alertas por fuente.
-  - Umbral: validar que 10080/40/70 minutos reflejan acuerdos operativos.
-- **Regla detectada:** ALERT global si al menos una fuente (`HOROMETROS`, `MINECARE`, `DISPATCH`) queda en ALERT.
+  - Umbral: validar 10080/40/70 con acuerdo operativo.
 - **Ambigüedades / supuestos:**
-  1. El campo `payload.fuente` puede no venir consistente; por eso se usa `fuente_detectada` como fallback.
-  2. Se mantiene conversión de zona horaria `America/Santiago` por paridad con query actual.
-  3. `WARN` no aparece en la lógica original; queda reservado para futura regla si negocio lo requiere.
-  4. Si una fuente no tiene registros recientes, se fuerza `Diferencia_Minutos` alto para evitar falso verde.
-
+  1. `payload.fuente` puede llegar vacío/inconsistente.
+  2. `payload.ultimo_timestamp` puede faltar o no parsear.
+  3. `WARN` queda reservado para futura regla de negocio.
 
 ### 7.6 Nota técnica (cambios, supuestos y riesgos)
 
@@ -501,3 +529,10 @@ fn_mon_mlp_pdmcaex_global()
   2. Calidad de `payload.ultimo_timestamp` por fuente.
   3. Tolerancia aceptable ante timestamps futuros (skew) y tratamiento final (WARN/ALERT).
   4. Si `last_update_utc` debe provenir de `event_ts_utc` (actual) o de `reference_ts_utc` (dato de fuente).
+
+
+## 8) Normalización aplicada al resto del catálogo
+
+- Las funciones de primera y segunda ola quedan sujetas al mismo estándar de 13 puntos definido en la sección 0.
+- Para próximas iteraciones, cada función se debe publicar en este formato antes de implementación manual en `ams-uat-dataplatform-laws`.
+- Este ajuste es de forma (documentación implementable), sin rediseñar lógica de negocio ya acordada.
