@@ -121,3 +121,7 @@
 - Las funciones ADA MLP fueron ajustadas para basarse en el bloque oficial `statusFuentes` y sus mapas/umbrales actualizados.
 - Funciones impactadas: `fn_mon_mlp_ada_global`, `fn_mon_mlp_ada_ingestas_global`, `fn_mon_mlp_ada_ingestas_pi`, `fn_mon_mlp_ada_ingestas_dispatch`, `fn_mon_mlp_ada_ingestas_drillit`, `fn_mon_mlp_ada_ingestas_plans`, `fn_mon_mlp_ada_ingestas_blockgrade`, `fn_mon_mlp_ada_ingestas_meteodata`, `fn_mon_mlp_ada_procesamiento_kpi`, `fn_mon_mlp_ada_procesamiento_alarm`, `fn_mon_mlp_ada_front`.
 - Nota: KPI/Alarmas/Front quedaron con integración base y requieren completar bloques `statusKpisAlarms` / `AlertarFront` del query oficial completo al momento de implementación manual.
+
+
+## Referencia de análisis crítico ADA
+- Ver `docs/functions/ada_analisis_performance_y_rediseno.md` para diagnóstico de duplicación, impacto en performance y propuesta de jerarquía base/dominio/pública.
