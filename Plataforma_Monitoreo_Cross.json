@@ -52,7 +52,7 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "<!-- === RESUMEN EJECUTIVO – MLP (chips con color por variable) === -->\n\n<div\n  style=\"\n    display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n    background:transparent;\n  \"\n>\n  <!-- ===== Tarjeta MLP ===== -->\n  <div style=\"scroll-snap-align:start;\">\n    <div\n      style=\"\n        background:#0c3e41;\n        border:1px solid rgba(255,255,255,.08);\n        border-radius:14px;\n        box-shadow:0 4px 16px rgba(0,0,0,.12);\n        color:#e6f0f0;\n      \"\n    >\n      <!-- Header -->\n      <div\n        style=\"\n          display:flex;align-items:center;gap:10px;\n          background:#0F6E73; /* AMSA teal */\n          color:#fff;border-top-left-radius:14px;border-top-right-radius:14px;\n          padding:10px 14px;\n        \"\n      >\n        <span style=\"font-size:18px\">⛏️</span>\n        <div style=\"font-weight:700;letter-spacing:.5px;\">MLP</div>\n        \n      </div>\n\n      <!-- Métricas (si quieres puedes inyectar contadores aquí) -->\n      <div style=\"padding:12px 14px 6px 14px;font-size:15px;color:#cfe6e6;\">\n        <div style=\"display:flex;gap:18px;flex-wrap:wrap;\">\n          <div>🟢 OK</div>\n          <div>🟡 Warn</div>\n          <div>🔴 Alert</div>\n        </div>\n      </div>\n\n      <!-- Chips de fuentes (cada uno toma su color de variable) -->\n      <div style=\"padding:8px 12px 14px;\">\n        <div id=\"mlp-chips-wrap\" style=\"display:flex;gap:8px;flex-wrap:wrap;\">\n\n          <!-- ADA -->\n          <span data-key=\"Dispatch\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Dispatch</span>\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       \n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Dispatch NRT</span>\n\n          <span data-key=\"Drillit\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_drillit:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Drillit</span>\n\n          <span data-key=\"PI\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_pi:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">PI System</span>\n\n          <span data-key=\"Plans\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_plans:raw};\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Planes</span>\n\n          <span data-key=\"Blockgrade\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_blockgrade:raw};\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Blockgrade</span>\n\n          <!-- PDM CAEX -->\n          <span data-key=\"Minecare\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_minecare:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">MineCare</span>\n\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros:raw};\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Horómetros</span>\n\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_meteodata:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Meteodata</span>\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">PDM SAG</span>\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       \n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">F80</span>\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       \n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">AXB</span>\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       \n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Optimizador Mezcla</span>\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       \n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Settings</span>\n          <!-- Si también quieres un chip \"Dispatch\" para PDM CAEX, descomenta esto y ajusta el label si corresponde -->\n          <!--\n          <span data-key=\"Dispatch\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;background:${var_mlp_pdmcaex_dispatch:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Dispatch (CAEX)</span>\n          -->\n\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n",
+        "content": "<!-- === RESUMEN EJECUTIVO – MLP (chips con color por variable) === -->\n\n<div\n  style=\"\n    display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n    background:transparent;\n  \"\n>\n  <!-- ===== Tarjeta MLP ===== -->\n  <div style=\"scroll-snap-align:start;\">\n    <div\n      style=\"\n        background:#0c3e41;\n        border:1px solid rgba(255,255,255,.08);\n        border-radius:14px;\n        box-shadow:0 4px 16px rgba(0,0,0,.12);\n        color:#e6f0f0;\n      \"\n    >\n      <!-- Header -->\n      <div\n        style=\"\n          display:flex;align-items:center;gap:10px;\n          background:#0F6E73; /* AMSA teal */\n          color:#fff;border-top-left-radius:14px;border-top-right-radius:14px;\n          padding:10px 14px;\n        \"\n      >\n        <span style=\"font-size:18px\">⛏️</span>\n        <div style=\"font-weight:700;letter-spacing:.5px;\">MLP</div>\n        \n      </div>\n\n      <!-- Métricas (si quieres puedes inyectar contadores aquí) -->\n      <div style=\"padding:12px 14px 6px 14px;font-size:15px;color:#cfe6e6;\">\n        <div style=\"display:flex;gap:18px;flex-wrap:wrap;\">\n          <div>🟢 OK</div>\n          <div>🟡 Warn</div>\n          <div>🔴 Alert</div>\n        </div>\n      </div>\n\n      <!-- Chips de fuentes (cada uno toma su color de variable) -->\n      <div style=\"padding:8px 12px 14px;\">\n        <div id=\"mlp-chips-wrap\" style=\"display:flex;gap:8px;flex-wrap:wrap;\">\n\n          <!-- ADA -->\n          <span data-key=\"Dispatch\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Dispatch</span>\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       \n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Dispatch NRT</span>\n\n          <span data-key=\"Drillit\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_drillit:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Drillit</span>\n\n          <span data-key=\"PI\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_pi:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">PI System</span>\n\n          <span data-key=\"Plans\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_plans:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Planes</span>\n\n          <span data-key=\"Blockgrade\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_blockgrade:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Blockgrade</span>\n\n          <!-- PDM CAEX -->\n          <span data-key=\"Minecare\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_minecare:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">MineCare</span>\n\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Horómetros</span>\n\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_meteodata:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Meteodata</span>\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">PDM SAG</span>\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       \n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">F80</span>\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       \n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">AXB</span>\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       \n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Optimizador Mezcla</span>\n          <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       \n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Settings</span>\n          <!-- Si también quieres un chip \"Dispatch\" para PDM CAEX, descomenta esto y ajusta el label si corresponde -->\n          <!--\n          <span data-key=\"Dispatch\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;background:${var_mlp_pdmcaex_dispatch:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Dispatch (CAEX)</span>\n          -->\n\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n",
         "mode": "html"
       },
       "pluginVersion": "11.6.9",
@@ -195,7 +195,7 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "\n\n<!-- === RESUMEN EJECUTIVO – MLP (chips con color por variable) === -->\n\n<div\n  style=\"\n    display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n    background:transparent;\n  \"\n>\n  <!-- ===== Tarjeta MLP ===== -->\n  <div style=\"scroll-snap-align:start;\">\n    <div\n      style=\"\n        background:#0c3e41;\n        border:1px solid rgba(255,255,255,.08);\n        border-radius:14px;\n        box-shadow:0 4px 16px rgba(0,0,0,.12);\n        color:#e6f0f0;\n      \"\n    >\n      <!-- Header -->\n      <div\n        style=\"\n          display:flex;align-items:center;gap:10px;\n          background:#0F6E73; /* AMSA teal */\n          color:#fff;border-top-left-radius:14px;border-top-right-radius:14px;\n          padding:10px 14px;\n        \"\n      >\n        <span style=\"font-size:18px\">⛏️</span>\n        <div style=\"font-weight:700;letter-spacing:.5px;\">MLP</div>\n\n      </div>\n\n      <!-- Métricas (si quieres puedes inyectar contadores aquí) -->\n      <div style=\"padding:12px 14px 6px 14px;font-size:15px;color:#cfe6e6;\">\n        <div style=\"display:flex;gap:18px;flex-wrap:wrap;\">\n          <div>🟢 OK</div>\n          <div>🟡 Warn</div>\n          <div>🔴 Alert</div>\n        </div>\n      </div>\n\n      <!-- Chips de fuentes (cada uno toma su color de variable) -->\n      <div style=\"padding:8px 12px 14px;\">\n        <div style=\"display:flex;gap:8px;flex-wrap:wrap;\">\n\n          <!-- ADA -->\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_global:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">ADA</span>\n\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_global:raw};\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">PDM CAEX</span>\n\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_sirosag_global:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">SIRO SAG</span>\n\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">SENSOR NASH</span>\n          \n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">SIRO POTENCIA</span>\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">ERA</span>\n\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n",
+        "content": "\n\n<!-- === RESUMEN EJECUTIVO – MLP (chips con color por variable) === -->\n\n<div\n  style=\"\n    display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n    background:transparent;\n  \"\n>\n  <!-- ===== Tarjeta MLP ===== -->\n  <div style=\"scroll-snap-align:start;\">\n    <div\n      style=\"\n        background:#0c3e41;\n        border:1px solid rgba(255,255,255,.08);\n        border-radius:14px;\n        box-shadow:0 4px 16px rgba(0,0,0,.12);\n        color:#e6f0f0;\n      \"\n    >\n      <!-- Header -->\n      <div\n        style=\"\n          display:flex;align-items:center;gap:10px;\n          background:#0F6E73; /* AMSA teal */\n          color:#fff;border-top-left-radius:14px;border-top-right-radius:14px;\n          padding:10px 14px;\n        \"\n      >\n        <span style=\"font-size:18px\">⛏️</span>\n        <div style=\"font-weight:700;letter-spacing:.5px;\">MLP</div>\n\n      </div>\n\n      <!-- Métricas (si quieres puedes inyectar contadores aquí) -->\n      <div style=\"padding:12px 14px 6px 14px;font-size:15px;color:#cfe6e6;\">\n        <div style=\"display:flex;gap:18px;flex-wrap:wrap;\">\n          <div>🟢 OK</div>\n          <div>🟡 Warn</div>\n          <div>🔴 Alert</div>\n        </div>\n      </div>\n\n      <!-- Chips de fuentes (cada uno toma su color de variable) -->\n      <div style=\"padding:8px 12px 14px;\">\n        <div style=\"display:flex;gap:8px;flex-wrap:wrap;\">\n\n          <!-- ADA -->\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_global:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">ADA</span>\n\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_global:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">PDM CAEX</span>\n\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_sirosag_global:raw};\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">SIRO SAG</span>\n\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">SENSOR NASH</span>\n          \n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">SIRO POTENCIA</span>\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">ERA</span>\n\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n",
         "mode": "html"
       },
       "pluginVersion": "11.6.9",
@@ -221,7 +221,7 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "<div\n  style=\"\n    display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n    background:transparent;\n  \"\n>\n\n  <div style=\"scroll-snap-align:start;\">\n    <div\n      style=\"\n        background:#0c3e41;\n        border:1px solid rgba(255,255,255,.08);\n        border-radius:14px;\n        box-shadow:0 4px 16px rgba(0,0,0,.12);\n        color:#e6f0f0;\n      \"\n    >\n      <div\n        style=\"\n          display:flex;align-items:center;gap:10px;\n          background:#0F6E73;color:#fff;\n          border-top-left-radius:14px;border-top-right-radius:14px;\n          padding:10px 14px;\n        \"\n      >\n        <span style=\"font-size:18px\">🏔️</span>\n        <div style=\"font-weight:700;letter-spacing:.5px;\">CENTINELA</div>\n      </div>\n\n      <div style=\"padding:12px 14px 6px 14px;font-size:15px;color:#cfe6e6;\">\n        <div style=\"display:flex;gap:18px;flex-wrap:wrap;\">\n          <div style=\"display:flex;align-items:center;gap:5px;\">🟢 <span>OK</span></div>\n          <div style=\"display:flex;align-items:center;gap:5px;\">🟡 <span>Warn</span></div>\n          <div style=\"display:flex;align-items:center;gap:5px;\">🔴 <span>Alert</span></div>\n        </div>\n      </div>\n\n      <div style=\"padding:8px 12px 14px;\">\n        <div style=\"display:flex;gap:8px;flex-wrap:wrap;\">\n          <span style=\"font-size:13px;padding:6px 10px;border-radius:999px;background:${var_cent_mtsulf_status:raw}; background-color:#eaf4ea; color:#0b3b1d; border:1px solid rgba(0,0,0,.06);\">MT SULFURO</span>\n          \n          <span style=\"font-size:13px;padding:6px 10px;border-radius:999px;background:${var_cent_siro_mol_status:raw}; background-color:#eaf4ea; color:#0b3b1d; border:1px solid rgba(0,0,0,.06);\">SIRO MOLIENDA</span>\n          \n          <span style=\"font-size:13px;padding:6px 10px;border-radius:999px;background:${var_cent_siro_flot_status:raw}; background-color:#eaf4ea; color:#0b3b1d; border:1px solid rgba(0,0,0,.06);\">SIRO FLOTACION</span>\n\n          <span style=\"font-size:13px;padding:6px 10px;border-radius:999px;background:${var_cent_ada_status:raw}; background-color:#eaf4ea; color:#0b3b1d; border:1px solid rgba(0,0,0,.06);\">ADA CENTINELA</span>\n\n          <span style=\"font-size:13px;padding:6px 10px;border-radius:999px;background:${var_cent_mtox_status:raw}; background-color:#eaf4ea; color:#0b3b1d; border:1px solid rgba(0,0,0,.06);\">MT ÓXIDOS</span>\n\n          <span style=\"font-size:13px;padding:6px 10px;border-radius:999px;background:${var_cent_mp10_status:raw}; background-color:#eaf4ea; color:#0b3b1d; border:1px solid rgba(0,0,0,.06);\">MP10 CALIDAD AIRE</span>\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>",
+        "content": "<div\n  style=\"\n    display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n    background:transparent;\n  \"\n>\n\n  <div style=\"scroll-snap-align:start;\">\n    <div\n      style=\"\n        background:#0c3e41;\n        border:1px solid rgba(255,255,255,.08);\n        border-radius:14px;\n        box-shadow:0 4px 16px rgba(0,0,0,.12);\n        color:#e6f0f0;\n      \"\n    >\n      <div\n        style=\"\n          display:flex;align-items:center;gap:10px;\n          background:#0F6E73;color:#fff;\n          border-top-left-radius:14px;border-top-right-radius:14px;\n          padding:10px 14px;\n        \"\n      >\n        <span style=\"font-size:18px\">🏔️</span>\n        <div style=\"font-weight:700;letter-spacing:.5px;\">CENTINELA</div>\n      </div>\n\n      <div style=\"padding:12px 14px 6px 14px;font-size:15px;color:#cfe6e6;\">\n        <div style=\"display:flex;gap:18px;flex-wrap:wrap;\">\n          <div style=\"display:flex;align-items:center;gap:5px;\">🟢 <span>OK</span></div>\n          <div style=\"display:flex;align-items:center;gap:5px;\">🟡 <span>Warn</span></div>\n          <div style=\"display:flex;align-items:center;gap:5px;\">🔴 <span>Alert</span></div>\n        </div>\n      </div>\n\n      <div style=\"padding:8px 12px 14px;\">\n        <div style=\"display:flex;gap:8px;flex-wrap:wrap;\">\n          <span style=\"font-size:13px;padding:6px 10px;border-radius:999px;background:${var_cent_mtsulf_status:raw}; color:#0b3b1d; border:1px solid rgba(0,0,0,.06);\">MT SULFURO</span>\n          \n          <span style=\"font-size:13px;padding:6px 10px;border-radius:999px;background:${var_cent_siro_mol_status:raw}; color:#0b3b1d; border:1px solid rgba(0,0,0,.06);\">SIRO MOLIENDA</span>\n          \n          <span style=\"font-size:13px;padding:6px 10px;border-radius:999px;background:${var_cent_siro_flot_status:raw}; color:#0b3b1d; border:1px solid rgba(0,0,0,.06);\">SIRO FLOTACION</span>\n\n          <span style=\"font-size:13px;padding:6px 10px;border-radius:999px;background:${var_cent_ada_status:raw}; color:#0b3b1d; border:1px solid rgba(0,0,0,.06);\">ADA CENTINELA</span>\n\n          <span style=\"font-size:13px;padding:6px 10px;border-radius:999px;background:${var_cent_mtox_status:raw}; color:#0b3b1d; border:1px solid rgba(0,0,0,.06);\">MT ÓXIDOS</span>\n\n          <span style=\"font-size:13px;padding:6px 10px;border-radius:999px;background:${var_cent_mp10_status:raw}; color:#0b3b1d; border:1px solid rgba(0,0,0,.06);\">MP10 CALIDAD AIRE</span>\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>",
         "mode": "html"
       },
       "pluginVersion": "11.6.9",
@@ -299,7 +299,7 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "<!-- === RESUMEN EJECUTIVO – INGESTAS CROSS (mockup) ===\n     Diseño: tarjetas por faena, alineadas en columnas (scroll horizontal).\n     Notas:\n     - Reemplaza/asegura variables: var_mlp_ok/warn/alert/total, var_centinela_*, var_antucoya_*.\n     - Puedes duplicar una tarjeta para nuevas faenas.\n-->\n<div\n  style=\"\n    display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n    background:transparent;\n  \"\n>\n <!-- ===== Tarjeta ANTUCOYA ===== -->\n  <div style=\"scroll-snap-align:start;\">\n    <div\n      style=\"\n        background:#0c3e41;\n        border:1px solid rgba(255,255,255,.08);\n        border-radius:14px;\n        box-shadow:0 4px 16px rgba(0,0,0,.12);\n        color:#e6f0f0;\n      \"\n    >\n      <div\n        style=\"\n          display:flex;align-items:center;gap:10px;\n          background:#0F6E73;color:#fff;\n          border-top-left-radius:14px;border-top-right-radius:14px;\n          padding:10px 14px;\n        \"\n      >\n        <span style=\"font-size:18px\">🪨</span>\n        <div style=\"font-weight:700;letter-spacing:.5px;\">AMSA CROSS</div>\n\n      </div>\n\n      <div style=\"padding:12px 14px 6px 14px;font-size:15px;color:#cfe6e6;\">\n        <div style=\"display:flex;gap:18px;flex-wrap:wrap;\">\n          <div>🟢 OK</div>\n          <div>🟡 Warn</div>\n          <div>🔴 Alert</div>\n        </div>\n      </div>\n\n            <div style=\"padding:8px 12px 14px;\">\n        <div style=\"display:flex;gap:8px;flex-wrap:wrap;\">\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;background:#eaf4ea;background:${var_amsa_rep_ppfm:raw};color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">PPFM</span>\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;background:#eaf4ea;background:${var_amsa_rep_ppfm:raw};color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">OPR RRHH</span>\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;background:#eaf4ea;background:${var_amsa_rep_ppfm:raw};color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Portal de energía 1.0</span>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n\n</div>\n\n\n\n\n\n ",
+        "content": "<!-- === RESUMEN EJECUTIVO – INGESTAS CROSS (mockup) ===\n     Diseño: tarjetas por faena, alineadas en columnas (scroll horizontal).\n     Notas:\n     - Reemplaza/asegura variables: var_mlp_ok/warn/alert/total, var_centinela_*, var_antucoya_*.\n     - Puedes duplicar una tarjeta para nuevas faenas.\n-->\n<div\n  style=\"\n    display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n    background:transparent;\n  \"\n>\n <!-- ===== Tarjeta ANTUCOYA ===== -->\n  <div style=\"scroll-snap-align:start;\">\n    <div\n      style=\"\n        background:#0c3e41;\n        border:1px solid rgba(255,255,255,.08);\n        border-radius:14px;\n        box-shadow:0 4px 16px rgba(0,0,0,.12);\n        color:#e6f0f0;\n      \"\n    >\n      <div\n        style=\"\n          display:flex;align-items:center;gap:10px;\n          background:#0F6E73;color:#fff;\n          border-top-left-radius:14px;border-top-right-radius:14px;\n          padding:10px 14px;\n        \"\n      >\n        <span style=\"font-size:18px\">🪨</span>\n        <div style=\"font-weight:700;letter-spacing:.5px;\">AMSA CROSS</div>\n\n      </div>\n\n      <div style=\"padding:12px 14px 6px 14px;font-size:15px;color:#cfe6e6;\">\n        <div style=\"display:flex;gap:18px;flex-wrap:wrap;\">\n          <div>🟢 OK</div>\n          <div>🟡 Warn</div>\n          <div>🔴 Alert</div>\n        </div>\n      </div>\n\n            <div style=\"padding:8px 12px 14px;\">\n        <div style=\"display:flex;gap:8px;flex-wrap:wrap;\">\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;background:#eaf4ea;background:${var_amsa_rep_ppfm_global:raw};color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">PPFM</span>\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;background:#eaf4ea;background:${var_amsa_rep_ppfm_global:raw};color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">OPR RRHH</span>\n          <span style=\"font-size:15px;padding:6px 10px;border-radius:999px;background:#eaf4ea;background:${var_amsa_rep_ppfm_global:raw};color:#0b3b1d;border:1px solid rgba(0,0,0,.06);\">Portal de energía 1.0</span>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n\n</div>\n\n\n\n\n\n ",
         "mode": "html"
       },
       "pluginVersion": "11.6.9",
@@ -338,7 +338,7 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "<!-- Colores referencia:\n  Producto (AMSA teal) #0F6E73\n  Teal claro de cards   #D6ECEE\n  OK #EAF4EA | WARN #FFF4CC | ALERT #FDE2E2\n-->\n\n<div style=\"\n  padding:20px;\n  font-family:Arial,Helvetica,sans-serif;\n  color:#1a1a1a;\n  background:#1c4a4d;        /* gris azulado corporativo */\n  border:1px solid #C7D3E0;  /* borde suave */\n  border-radius:12px;\n  box-shadow:0 4px 16px rgba(0,0,0,0.08);\n      display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n\">\n  <div style=\"padding:20px;font-family:Arial,Helvetica,sans-serif;color:#eaeaea;\">\n\n    <!-- Título + leyenda -->\n    <div style=\"display:flex;flex-direction:column;align-items:flex-start;margin:0 0 12px 0;\">\n  <h2 style=\"margin:0 0 6px 0;font-size:22px;color:#eaeaea;\">Minera Los Pelambres</h2>\n  <div style=\"font-size:15px;color:#cfcfcf;\">\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;background:#2E7D32;margin:0 6px 0 0;vertical-align:middle;\"></span>Actualizado\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;background:#FFC107;margin:0 6px 0 12px;vertical-align:middle;\"></span>Warning\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;background:#E53935;margin:0 6px 0 12px;vertical-align:middle;\"></span>Alerta\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;background:#0F6E73;margin:0 6px 0 12px;vertical-align:middle;\"></span>Producto\n  </div>\n</div>\n\n\n    <!-- ======= ADA ======= -->\n    <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/fedfvgsz1j8qoa/monitoreo-refactor-ada-prd?orgId=1&from=now-6h&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard Monitoreo Refactor ADA (nueva pestaña)\"\n    >\n      <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n      <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n        <div></div>\n        <div style=\"text-align:right;\">\n          <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#2E7D32;color:#fff;\">\n            PRD\n          </span>\n        </div>\n\n        <h2 style=\"margin:0;text-align:center;\">ADA</h2>\n        \n      </div>\n    </div>\n\n\n      <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n        <!-- PI SYSTEM -->\n        <div style=\"\n          background:#EAF4EA;                    /* fallback */\n          //background:${var_mlp_ada_ingestas_global:raw};           /* variable */\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>INGESTAS\n            <span data-key=\"Dispatch\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Dispatch NRT</span>\n            <span data-key=\"Drillit\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_drillit:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Drillit</span>\n\n          <span data-key=\"PI\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_pi:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">PI System</span>\n\n          <span data-key=\"Plans\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       \n                       background:${var_mlp_ada_plans:raw};\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Planes</span>\n\n          <span data-key=\"Blockgrade\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_blockgrade:raw};\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Blockgrade</span>\n           <span data-key=\"Optimizador Mezcla\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_blockgrade:raw};\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Optimizador Mezcla</span>\n             <span data-key=\"Settings\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_blockgrade:raw};\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Settings</span>\n          </div>\n\n        </div>\n\n        <!-- DISPATCH -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_ada_kpi:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>KPIs\n          </div>\n\n        </div>\n <!-- DISPATCH -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_ada_alarm:raw};\n          background:#EAF4EA;\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>Alarmas\n          </div>\n\n        </div>\n        <!-- DRILLIT -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_ada_front:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>FRONT\n          </div>\n\n        </div>\n\n\n      </div>\n    </a>\n\n    \n    <!-- ======= PDM CAEX ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/f1a57688-b500-4e7e-8b12-430cc1ecdc72/dashboard-pdm-caex?orgId=1&from=now-6h&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n      <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#FFC107; color:#333;\">\n        UAT\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">PDM CAEX</h3>\n    \n  </div>\n</div>\n\n      <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n        <!-- MINECARE -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_pdmcaex_minecare:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>INGESTAS\n            <span data-key=\"Dispatch\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_dispatch}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Dispatch</span>\n            <span data-key=\"MineCare\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_minecare}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">MineCare</span>\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Horometros</span>\n          </div>\n        </div>\n\n        <!-- HORÓMETROS -->\n        <div style=\"\n          background:#EAF4EA;\n          background:#EAF4EA;\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>PROCESAMIENTO\n          </div>\n        </div>\n\n        <!-- DISPATCH (de CAEX) -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_pdmcaex_front:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>FRONT\n          </div>\n        </div>\n\n      </div>\n    </a>\n       \n      <!-- ======= SIRO SAG ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/fexr9bg6ntrlsb/dashboard-siro-sag-prd?orgId=1&from=now-6h&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n          <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n      <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n        <div></div>\n        <div style=\"text-align:right;\">\n          <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#2E7D32;color:#fff;\">\n            PRD\n          </span>\n        </div>\n\n        <h2 style=\"margin:0;text-align:center;\">SIRO SAG</h2>\n        \n      </div>\n    </div>\n\n      <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n        <!-- MINECARE -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_sirosag_ingesta:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>INGESTAS\n                            <span data-key=\"Dispatch\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_dispatch}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Planes</span>\n            <span data-key=\"MineCare\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_minecare}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">notPi</span>\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">PDM_SAG</span>\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">F80</span>\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">AXB</span>\n          </div>\n        </div>\n\n        <!-- HORÓMETROS -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_sirosag_transformacion:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>PROCESAMIENTO\n          </div>\n        </div>\n\n        <!-- DISPATCH (de CAEX) -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_pdmcaex_dispatch:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>RECOMENDACION\n          </div>\n        </div>\n\n      </div>\n    </a>\n       \n      <!-- ======= SIRO SAG ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/ff3b2c8h8zxfkb/sensor-virtual-flujo-nash?orgId=1&from=now-6h&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n           <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#FFC107; color:#333;\">\n        UAT\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">SENSOR NASH</h3>\n    \n  </div>\n</div>\n\n      <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n        <!-- MINECARE -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_pi_nash:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>INGESTAS\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">NotPi</span>\n          </div>\n        </div>\n\n        <!-- HORÓMETROS -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_transf_nash:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>TRANSFORMACION\n          </div>\n        </div>\n\n        <!-- DISPATCH (de CAEX) -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_prediccion_nash:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>PREDICCION\n          </div>\n        </div>\n\n      </div>\n    </a>\n       \n      <!-- ======= SIRO SAG ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/d387a330-c4e1-4d65-96f3-4106a16edede/dashboard-siro-potencia?orgId=1&from=now-30h&to=now&timezone=browser&refresh=5m\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n            <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#FFC107; color:#333;\">\n        UAT\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">SIRO POTENCIA</h3>\n    \n  </div>\n</div>\n\n      <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n        <!-- MINECARE -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_siropotencia_ingesta:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>INGESTAS\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">notPi</span>\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Archivo Manual</span>\n          </div>\n        </div>\n\n        <!-- HORÓMETROS -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_siroPotencia_transformacion:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>PROCESAMIENTO\n          </div>\n        </div>\n\n        <!-- DISPATCH (de CAEX) -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_siropotencia_front:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>FRONT\n          </div>\n        </div>\n\n      </div>\n    </a>\n  </div>\n  </div>\n  </div>\n  </div>\n</div>\n",
+        "content": "<!-- Colores referencia:\n  Producto (AMSA teal) #0F6E73\n  Teal claro de cards   #D6ECEE\n  OK #EAF4EA | WARN #FFF4CC | ALERT #FDE2E2\n-->\n\n<div style=\"\n  padding:20px;\n  font-family:Arial,Helvetica,sans-serif;\n  color:#1a1a1a;\n  background:#1c4a4d;        /* gris azulado corporativo */\n  border:1px solid #C7D3E0;  /* borde suave */\n  border-radius:12px;\n  box-shadow:0 4px 16px rgba(0,0,0,0.08);\n      display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n\">\n  <div style=\"padding:20px;font-family:Arial,Helvetica,sans-serif;color:#eaeaea;\">\n\n    <!-- Título + leyenda -->\n    <div style=\"display:flex;flex-direction:column;align-items:flex-start;margin:0 0 12px 0;\">\n  <h2 style=\"margin:0 0 6px 0;font-size:22px;color:#eaeaea;\">Minera Los Pelambres</h2>\n  <div style=\"font-size:15px;color:#cfcfcf;\">\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;background:#2E7D32;margin:0 6px 0 0;vertical-align:middle;\"></span>Actualizado\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;background:#FFC107;margin:0 6px 0 12px;vertical-align:middle;\"></span>Warning\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;background:#E53935;margin:0 6px 0 12px;vertical-align:middle;\"></span>Alerta\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;background:#0F6E73;margin:0 6px 0 12px;vertical-align:middle;\"></span>Producto\n  </div>\n</div>\n\n\n    <!-- ======= ADA ======= -->\n    <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/fedfvgsz1j8qoa/monitoreo-refactor-ada-prd?orgId=1&from=now-6h&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard Monitoreo Refactor ADA (nueva pestaña)\"\n    >\n      <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n      <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n        <div></div>\n        <div style=\"text-align:right;\">\n          <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#2E7D32;color:#fff;\">\n            PRD\n          </span>\n        </div>\n\n        <h2 style=\"margin:0;text-align:center;\">ADA</h2>\n        \n      </div>\n    </div>\n\n\n      <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n        <!-- PI SYSTEM -->\n        <div style=\"\n          background:#EAF4EA;                    /* fallback */\n          //background:${var_mlp_ada_ingestas_global:raw};           /* variable */\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>INGESTAS\n            <span data-key=\"Dispatch\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Dispatch NRT</span>\n            <span data-key=\"Drillit\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_drillit:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Drillit</span>\n\n          <span data-key=\"PI\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_pi:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">PI System</span>\n\n          <span data-key=\"Plans\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       \n                       background:${var_mlp_ada_plans:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Planes</span>\n\n          <span data-key=\"Blockgrade\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_blockgrade:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Blockgrade</span>\n           <span data-key=\"Optimizador Mezcla\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_blockgrade:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Optimizador Mezcla</span>\n             <span data-key=\"Settings\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_ada_blockgrade:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Settings</span>\n          </div>\n\n        </div>\n\n        <!-- DISPATCH -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_ada_kpi:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>KPIs\n          </div>\n\n        </div>\n <!-- DISPATCH -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_ada_alarm:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>Alarmas\n          </div>\n\n        </div>\n        <!-- DRILLIT -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_ada_front:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>FRONT\n          </div>\n\n        </div>\n\n\n      </div>\n    </a>\n\n    \n    <!-- ======= PDM CAEX ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/f1a57688-b500-4e7e-8b12-430cc1ecdc72/dashboard-pdm-caex?orgId=1&from=now-6h&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n      <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#FFC107; color:#333;\">\n        UAT\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">PDM CAEX</h3>\n    \n  </div>\n</div>\n\n      <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n        <!-- MINECARE -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_pdmcaex_minecare:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>INGESTAS\n            <span data-key=\"Dispatch\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_dispatch:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Dispatch</span>\n            <span data-key=\"MineCare\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_minecare:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">MineCare</span>\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Horometros</span>\n          </div>\n        </div>\n\n        <!-- HORÓMETROS -->\n        <div style=\"\n          background:#EAF4EA;\n          background:#EAF4EA;\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>PROCESAMIENTO\n          </div>\n        </div>\n\n        <!-- DISPATCH (de CAEX) -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_pdmcaex_front:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>FRONT\n          </div>\n        </div>\n\n      </div>\n    </a>\n       \n      <!-- ======= SIRO SAG ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/fexr9bg6ntrlsb/dashboard-siro-sag-prd?orgId=1&from=now-6h&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n          <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n      <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n        <div></div>\n        <div style=\"text-align:right;\">\n          <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#2E7D32;color:#fff;\">\n            PRD\n          </span>\n        </div>\n\n        <h2 style=\"margin:0;text-align:center;\">SIRO SAG</h2>\n        \n      </div>\n    </div>\n\n      <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n        <!-- MINECARE -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_sirosag_ingesta:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>INGESTAS\n                            <span data-key=\"Dispatch\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_dispatch:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Planes</span>\n            <span data-key=\"MineCare\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_minecare:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">notPi</span>\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">PDM_SAG</span>\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">F80</span>\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">AXB</span>\n          </div>\n        </div>\n\n        <!-- HORÓMETROS -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_sirosag_transformacion:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>PROCESAMIENTO\n          </div>\n        </div>\n\n        <!-- DISPATCH (de CAEX) -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_pdmcaex_dispatch:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>RECOMENDACION\n          </div>\n        </div>\n\n      </div>\n    </a>\n       \n      <!-- ======= SIRO SAG ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/ff3b2c8h8zxfkb/sensor-virtual-flujo-nash?orgId=1&from=now-6h&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n           <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#FFC107; color:#333;\">\n        UAT\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">SENSOR NASH</h3>\n    \n  </div>\n</div>\n\n      <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n        <!-- MINECARE -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_pi_nash:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>INGESTAS\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">NotPi</span>\n          </div>\n        </div>\n\n        <!-- HORÓMETROS -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_transf_nash:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>TRANSFORMACION\n          </div>\n        </div>\n\n        <!-- DISPATCH (de CAEX) -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_prediccion_nash:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>PREDICCION\n          </div>\n        </div>\n\n      </div>\n    </a>\n       \n      <!-- ======= SIRO SAG ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/d387a330-c4e1-4d65-96f3-4106a16edede/dashboard-siro-potencia?orgId=1&from=now-30h&to=now&timezone=browser&refresh=5m\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n            <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#FFC107; color:#333;\">\n        UAT\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">SIRO POTENCIA</h3>\n    \n  </div>\n</div>\n\n      <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n        <!-- MINECARE -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_siropotencia_ingesta:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>INGESTAS\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">notPi</span>\n            <span data-key=\"Horometros\" style=\"font-size:15px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Archivo Manual</span>\n          </div>\n        </div>\n\n        <!-- HORÓMETROS -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_siroPotencia_transformacion:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>PROCESAMIENTO\n          </div>\n        </div>\n\n        <!-- DISPATCH (de CAEX) -->\n        <div style=\"\n          background:#EAF4EA;\n          background:${var_mlp_siropotencia_front:raw};\n          border:1px solid rgba(255,255,255,.05);\n          border-radius:10px;padding:14px;\">\n          <div style=\"margin:0;font-weight:700;font-size:20px;color:#1a1a1a;\">\n            <span style=\"margin-right:6px;\"/span>FRONT\n          </div>\n        </div>\n\n      </div>\n    </a>\n  </div>\n  </div>\n  </div>\n  </div>\n</div>\n",
         "mode": "html",
         "sanitize": false
       },
@@ -456,7 +456,7 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "\n\n<!-- Colores referencia:\n  Producto (AMSA teal) #0F6E73\n  Teal claro de cards   #D6ECEE\n  Borde neutro          rgba(255,255,255,.05)\n  OK #2E7D32 | WARN #FFC107 | ALERT #E53935 | Info #1565C0\n-->\n<div style=\"\n  padding:20px;\n  font-family:Arial,Helvetica,sans-serif;\n  color:#1a1a1a;\n  background:#1c4a4d;        /* gris azulado corporativo */\n  border:1px solid #C7D3E0;  /* borde suave */\n  border-radius:12px;\n  box-shadow:0 4px 16px rgba(0,0,0,0.08);\n      display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n\">\n<div style=\"padding:20px;font-family:Arial,Helvetica,sans-serif;color:#eaeaea;\">\n\n  <!-- Título + leyenda -->\n  <div style=\"display:flex;flex-direction:column;align-items:flex-start;margin:0 0 12px 0;\">\n  <h2 style=\"margin:0 0 6px 0;font-size:22px;color:#eaeaea;\">ZALDIVAR</h2>\n  <div style=\"font-size:12px;color:#cfcfcf;\">\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#2E7D32;margin:0 6px 0 0;vertical-align:middle;\"></span>Actualizado\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#FFC107;margin:0 6px 0 12px;vertical-align:middle;\"></span>Warning\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#E53935;margin:0 6px 0 12px;vertical-align:middle;\"></span>Alerta\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#0F6E73;margin:0 6px 0 12px;vertical-align:middle;\"></span>Producto\n  </div>\n  \n</div>\n\n</a>\n     \n      <!-- ======= SIRO SAG ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/eeme6irj4h4aob/01-reporte-cmz-uat?orgId=1&from=now-6h&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n  <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#FFC107; color:#333;\">\n        UAT\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">Reporte Ejecutivo CMZ</h3>\n    \n  </div>\n</div>\n\n  <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n    <!-- DISPATCH OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>INGESTAS\n                <span data-key=\"Dispatch\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_dispatch}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">SharedPoint</span>\n            <span data-key=\"MineCare\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_minecare}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">JIGSAW</span>\n            <span data-key=\"Horometros\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros}:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">PM</span></div>\n\n    </div>\n\n    <!-- JIGSAW OK -->\n    <div style=\"background:#EAF4EA; background:${var_cmz_repEjecutivo_transformacion:raw}; border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>PROCESAMIENTO</div>\n    </div>\n\n    <!-- VULCAN -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>GENERACION REPORTE</div>\n    </div>\n\n    <!-- PLANES OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>ENVIO REPORTE</div>\n\n    </div>\n  </div>\n</a>\n\n\n  \n</div>\n\n",
+        "content": "\n\n<!-- Colores referencia:\n  Producto (AMSA teal) #0F6E73\n  Teal claro de cards   #D6ECEE\n  Borde neutro          rgba(255,255,255,.05)\n  OK #2E7D32 | WARN #FFC107 | ALERT #E53935 | Info #1565C0\n-->\n<div style=\"\n  padding:20px;\n  font-family:Arial,Helvetica,sans-serif;\n  color:#1a1a1a;\n  background:#1c4a4d;        /* gris azulado corporativo */\n  border:1px solid #C7D3E0;  /* borde suave */\n  border-radius:12px;\n  box-shadow:0 4px 16px rgba(0,0,0,0.08);\n      display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n\">\n<div style=\"padding:20px;font-family:Arial,Helvetica,sans-serif;color:#eaeaea;\">\n\n  <!-- Título + leyenda -->\n  <div style=\"display:flex;flex-direction:column;align-items:flex-start;margin:0 0 12px 0;\">\n  <h2 style=\"margin:0 0 6px 0;font-size:22px;color:#eaeaea;\">ZALDIVAR</h2>\n  <div style=\"font-size:12px;color:#cfcfcf;\">\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#2E7D32;margin:0 6px 0 0;vertical-align:middle;\"></span>Actualizado\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#FFC107;margin:0 6px 0 12px;vertical-align:middle;\"></span>Warning\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#E53935;margin:0 6px 0 12px;vertical-align:middle;\"></span>Alerta\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#0F6E73;margin:0 6px 0 12px;vertical-align:middle;\"></span>Producto\n  </div>\n  \n</div>\n\n</a>\n     \n      <!-- ======= SIRO SAG ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/eeme6irj4h4aob/01-reporte-cmz-uat?orgId=1&from=now-6h&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n  <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#FFC107; color:#333;\">\n        UAT\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">Reporte Ejecutivo CMZ</h3>\n    \n  </div>\n</div>\n\n  <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n    <!-- DISPATCH OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>INGESTAS\n                <span data-key=\"Dispatch\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_dispatch:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">SharedPoint</span>\n            <span data-key=\"MineCare\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_minecare:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">JIGSAW</span>\n            <span data-key=\"Horometros\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_mlp_pdmcaex_horometros:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">PM</span></div>\n\n    </div>\n\n    <!-- JIGSAW OK -->\n    <div style=\"background:#EAF4EA; background:${var_cmz_repEjecutivo_transformacion:raw}; border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>PROCESAMIENTO</div>\n    </div>\n\n    <!-- VULCAN -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>GENERACION REPORTE</div>\n    </div>\n\n    <!-- PLANES OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>ENVIO REPORTE</div>\n\n    </div>\n  </div>\n</a>\n\n\n  \n</div>\n\n",
         "mode": "html"
       },
       "pluginVersion": "11.6.9",
@@ -482,7 +482,7 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "<!-- Colores referencia:\n  Producto (AMSA teal) #0F6E73\n  Teal claro de cards   #D6ECEE\n  Borde neutro          rgba(255,255,255,.05)\n  OK #2E7D32 | WARN #FFC107 | ALERT #E53935 | Info #1565C0\n-->\n<div style=\"\n  padding:20px;\n  font-family:Arial,Helvetica,sans-serif;\n  color:#1a1a1a;\n  background:#1c4a4d;        /* gris azulado corporativo */\n  border:1px solid #C7D3E0;  /* borde suave */\n  border-radius:12px;\n  box-shadow:0 4px 16px rgba(0,0,0,0.08);\n      display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n\">\n<div style=\"padding:20px;font-family:Arial,Helvetica,sans-serif;color:#eaeaea;\">\n\n  <!-- Título + leyenda -->\n  <div style=\"display:flex;flex-direction:column;align-items:flex-start;margin:0 0 12px 0;\">\n  <h2 style=\"margin:0 0 6px 0;font-size:22px;color:#eaeaea;\">AMSA CROSS</h2>\n  <div style=\"font-size:12px;color:#cfcfcf;\">\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#2E7D32;margin:0 6px 0 0;vertical-align:middle;\"></span>Actualizado\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#FFC107;margin:0 6px 0 12px;vertical-align:middle;\"></span>Warning\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#E53935;margin:0 6px 0 12px;vertical-align:middle;\"></span>Alerta\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#0F6E73;margin:0 6px 0 12px;vertical-align:middle;\"></span>Producto\n  </div>\n</div>\n\n</a>\n     \n      <!-- ======= SIRO SAG ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/aew7jgy7zehogf/reportabilidad-ppfm?orgId=1&from=now-6h&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n  <!-- ======= ADA (header de producto en teal corporativo) ======= -->\n        <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#1976D2; color:#fff;\">\n        DEV\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">REPORTE PPFM</h3>\n    \n  </div>\n</div>\n\n  <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n    <!-- DISPATCH OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>INGESTAS\n                        <span data-key=\"Horometros\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_amsa_rep_ppfm_global:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">SIGA</span>\n                 <span data-key=\"Horometros\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_amsa_rep_ppfm_global:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">SERCOL</span>\n      </div>\n\n\n    </div>\n\n    <!-- JIGSAW OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>TRANFORMACION</div>\n    </div>\n\n    <!-- VULCAN -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>TABLAS DELTA</div>\n    </div>\n  \n</div>\n</a>\n\n</a>\n     \n      <!-- ======= SIRO SAG ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/Xbc2I8-Vk/dashboard-opr-digital-rrhh-uat?orgId=1&from=now-30d&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n  <!-- ======= ADA (header de producto en teal corporativo) ======= -->\n        <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#FFC107; color:#333;\">\n        UAT\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">OPR RRHH</h3>\n    \n  </div>\n</div>\n\n  <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n    <!-- DISPATCH OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>INGESTAS\n                        <span data-key=\"Horometros\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_amsa_rep_ppfm_global_:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">API RH</span>\n                 <span data-key=\"Horometros\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_amsa_rep_ppfm_global_:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">API ISSA</span>\n      </div>\n\n\n    </div>\n\n    <!-- JIGSAW OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>TRANFORMACION</div>\n    </div>\n\n    <!-- VULCAN -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>TABLAS DELTA</div>\n    </div>\n  \n</div>\n</a>\n\n  <!-- ======= ADA (header de producto en teal corporativo) ======= -->\n        <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#FFC107; color:#333;\">\n        UAT\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">Portal de Energia 1.0</h3>\n    \n  </div>\n</div>\n\n  <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n    <!-- DISPATCH OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>INGESTAS\n                        <span data-key=\"Horometros\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Sharepoint</span>\n                 \n      </div>\n\n\n    </div>\n\n    <!-- JIGSAW OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>TRANFORMACION</div>\n    </div>\n\n    <!-- VULCAN -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>TABLAS DELTA</div>\n    </div>\n  \n</div>\n</div>",
+        "content": "<!-- Colores referencia:\n  Producto (AMSA teal) #0F6E73\n  Teal claro de cards   #D6ECEE\n  Borde neutro          rgba(255,255,255,.05)\n  OK #2E7D32 | WARN #FFC107 | ALERT #E53935 | Info #1565C0\n-->\n<div style=\"\n  padding:20px;\n  font-family:Arial,Helvetica,sans-serif;\n  color:#1a1a1a;\n  background:#1c4a4d;        /* gris azulado corporativo */\n  border:1px solid #C7D3E0;  /* borde suave */\n  border-radius:12px;\n  box-shadow:0 4px 16px rgba(0,0,0,0.08);\n      display:grid;\n    grid-auto-flow:column;\n    grid-auto-columns:minmax(340px, 1fr);\n    gap:16px;\n    padding:0px;\n    overflow-x:auto;\n    overscroll-behavior:contain;\n    scroll-snap-type:x proximity;\n    -webkit-overflow-scrolling:touch;\n\">\n<div style=\"padding:20px;font-family:Arial,Helvetica,sans-serif;color:#eaeaea;\">\n\n  <!-- Título + leyenda -->\n  <div style=\"display:flex;flex-direction:column;align-items:flex-start;margin:0 0 12px 0;\">\n  <h2 style=\"margin:0 0 6px 0;font-size:22px;color:#eaeaea;\">AMSA CROSS</h2>\n  <div style=\"font-size:12px;color:#cfcfcf;\">\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#2E7D32;margin:0 6px 0 0;vertical-align:middle;\"></span>Actualizado\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#FFC107;margin:0 6px 0 12px;vertical-align:middle;\"></span>Warning\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#E53935;margin:0 6px 0 12px;vertical-align:middle;\"></span>Alerta\n    <span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;\n                 background:#0F6E73;margin:0 6px 0 12px;vertical-align:middle;\"></span>Producto\n  </div>\n</div>\n\n</a>\n     \n      <!-- ======= SIRO SAG ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/aew7jgy7zehogf/reportabilidad-ppfm?orgId=1&from=now-6h&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n  <!-- ======= ADA (header de producto en teal corporativo) ======= -->\n        <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#1976D2; color:#fff;\">\n        DEV\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">REPORTE PPFM</h3>\n    \n  </div>\n</div>\n\n  <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n    <!-- DISPATCH OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>INGESTAS\n                        <span data-key=\"Horometros\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_amsa_rep_ppfm_global:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">SIGA</span>\n                 <span data-key=\"Horometros\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_amsa_rep_ppfm_global:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">SERCOL</span>\n      </div>\n\n\n    </div>\n\n    <!-- JIGSAW OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>TRANFORMACION</div>\n    </div>\n\n    <!-- VULCAN -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>TABLAS DELTA</div>\n    </div>\n  \n</div>\n</a>\n\n</a>\n     \n      <!-- ======= SIRO SAG ======= -->\n    <!-- … (resto igual si lo necesitas) … -->\n <a\n      href=\"https://amsdevdatagrafana-h7efa6d6htemamff.eus2.grafana.azure.com/d/Xbc2I8-Vk/dashboard-opr-digital-rrhh-uat?orgId=1&from=now-30d&to=now&timezone=browser\"\n      target=\"_blank\" rel=\"noopener\"\n      style=\"display:block; text-decoration:none; color:inherit; border-radius:10px; overflow:hidden;\"\n      aria-label=\"Abrir dashboard PDM CAEX (nueva pestaña)\"\n    >\n  <!-- ======= ADA (header de producto en teal corporativo) ======= -->\n        <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#FFC107; color:#333;\">\n        UAT\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">OPR RRHH</h3>\n    \n  </div>\n</div>\n\n  <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n    <!-- DISPATCH OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>INGESTAS\n                        <span data-key=\"Horometros\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_amsa_rep_ppfm_global:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">API RH</span>\n                 <span data-key=\"Horometros\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       background:${var_amsa_rep_ppfm_global:raw};\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">API ISSA</span>\n      </div>\n\n\n    </div>\n\n    <!-- JIGSAW OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>TRANFORMACION</div>\n    </div>\n\n    <!-- VULCAN -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>TABLAS DELTA</div>\n    </div>\n  \n</div>\n</a>\n\n  <!-- ======= ADA (header de producto en teal corporativo) ======= -->\n        <div style=\"background:#0F6E73;color:#fff;padding:12px 14px;border-radius:10px;margin:10px 0 14px 0;border:1px solid rgba(0,0,0,.25);\">\n  <div style=\"display:grid;grid-template-columns:1fr auto 1fr;align-items:start;\">\n    <div></div>\n    <div style=\"text-align:right;\">\n      <span style=\"padding:4px 10px;font-size:11px;font-weight:800;border-radius:999px;background:#FFC107; color:#333;\">\n        UAT\n      </span>\n    </div>\n    <h3 style=\"margin:0;text-align:center;\">Portal de Energia 1.0</h3>\n    \n  </div>\n</div>\n\n  <div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;\">\n\n    <!-- DISPATCH OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>INGESTAS\n                        <span data-key=\"Horometros\" style=\"font-size:13px;padding:6px 10px;border-radius:999px;\n                       background:#EAF4EA;\n                       color:#0b3b1d;border:1px solid #A8A7A7;\">Sharepoint</span>\n                 \n      </div>\n\n\n    </div>\n\n    <!-- JIGSAW OK -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>TRANFORMACION</div>\n    </div>\n\n    <!-- VULCAN -->\n    <div style=\"background:#EAF4EA;border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:14px;\">\n      <div style=\"margin:0;font-weight:700;font-size:14px;color:#1a1a1a;\"><span style=\"margin-right:6px;\"/span>TABLAS DELTA</div>\n    </div>\n  \n</div>\n</div>",
         "mode": "html"
       },
       "pluginVersion": "11.6.9",
@@ -1479,6 +1479,771 @@
         "refresh": 2,
         "regex": "",
         "type": "query"
+      },
+      {
+        "name": "var_cent_dispatch",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_jigsaw",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_planes",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_vulcan",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_pi",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_cesmec",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_envirosuit",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_meteodata",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_smartroad",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_wenco",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mtsulf_status",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_siro_mol_status",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_siro_flot_status",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_ada_status",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mtox_status",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mp10_status",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mtsulf_dispatch",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mtsulf_jigsaw",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mtsulf_vulcan",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mtsulf_planes",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mtsulf_proc",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_siro_mol_pi",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_siro_mol_proc",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_siro_mol_front",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_ada_dispatch",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_ada_pi",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_ada_jigsaw",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_ada_planes",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_ada_proc",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_ada_front",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mtox_jigsaw",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mtox_vulcan",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mtox_thiess",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mtox_planes",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mtox_proc",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mtox_front",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mp10_jigsaw",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mp10_dispatch",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mp10_cesmec",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mp10_meteodata",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mp10_envirosuit",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mp10_smartroad",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mp10_proc",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cent_mp10_front",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
+      },
+      {
+        "name": "var_cen_mtsulf_dispatch",
+        "type": "constant",
+        "hide": 2,
+        "query": "#EAF4EA",
+        "current": {
+          "text": "#EAF4EA",
+          "value": "#EAF4EA"
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "#EAF4EA",
+            "value": "#EAF4EA"
+          }
+        ]
       }
     ]
   },
