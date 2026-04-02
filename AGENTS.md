@@ -332,3 +332,57 @@ Cuando propongas funciones KQL para Azure Monitor / Log Analytics Workspace:
    - qué falta
    - qué tabla/campo probable se necesita
    - qué regla operacional debe validarse
+
+Quiero que desde ahora en este proyecto adoptes esta convención de organización para funciones KQL:
+
+1. Cada función propuesta, analizada o creada debe quedar en su propio archivo markdown dentro de:
+   docs/functions/
+
+2. Además debe existir un archivo resumen central:
+   docs/functions/_resumen_avance_funciones.md
+
+3. Para cada función, el archivo individual debe incluir obligatoriamente:
+   - nombre de la función
+   - objetivo
+   - tipo de función (estado actual vs histórica)
+   - workspace objetivo
+   - variable(s) de Grafana que alimenta
+   - contrato de salida:
+     - status
+     - color
+     - evidence
+     - last_update_utc
+   - resource que debe usarse desde Grafana
+   - query wrapper en Grafana
+   - query de validación
+   - fuente probable
+   - tabla(s) probable(s)
+   - regla operacional esperada
+   - supuestos
+   - limitaciones
+   - KQL actual o propuesta
+
+4. El archivo resumen central debe llevar una tabla con:
+   - función
+   - producto
+   - capa
+   - variable Grafana
+   - workspace
+   - estado
+   - prioridad
+   - última actualización
+   - observaciones
+
+5. Actualiza desde ya esta estructura para:
+   - fn_mon_mlp_pdmcaex_global
+
+6. Marca explícitamente que para usar fn_mon_mlp_pdmcaex_global() desde Grafana, el resource principal debe ser:
+   - ams-uat-dataplatform-laws
+
+7. Incluye en el archivo de la función el wrapper:
+   fn_mon_mlp_pdmcaex_global()
+   | project color
+   | take 1
+
+8. No reescribas todo el proyecto.
+   Solo crea esta organización base y deja el estándar listo para seguir con las próximas funciones.
