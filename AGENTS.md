@@ -277,3 +277,58 @@ Si hay conflicto entre:
 - y refactor técnico
 
 favorecer una solución que mantenga la estética, siempre que no aumente innecesariamente la complejidad.
+
+
+## Calidad esperada de documentación
+- No dejar documentos en estado de borrador conceptual.
+- Toda matriz debe servir como backlog técnico accionable.
+- Toda propuesta KQL debe distinguir entre:
+  - implementable ahora,
+  - esqueleto pendiente de contexto,
+  - placeholder temporal.
+- Evitar documentos ambiguos o excesivamente genéricos.
+- Cuando falte contexto para implementar lógica real, documentar exactamente qué falta y por qué.
+
+- ## Regla permanente para funciones KQL en Log Analytics Workspace
+
+Cuando propongas funciones KQL para Azure Monitor / Log Analytics Workspace:
+
+1. NO uses ni sugieras `.create-or-alter function` como método principal de creación en LAW.
+2. Asume que la creación se hará manualmente desde:
+   - Logs
+   - ejecutar/probar query
+   - Save
+   - Save as function
+3. Entrega siempre la función en formato compatible con ese flujo:
+   - cuerpo de query listo para pegar en Logs
+   - nombre sugerido de función
+   - folder sugerido
+   - docstring o descripción sugerida
+4. Toda función debe estar documentada explícitamente con:
+   - objetivo operativo
+   - capa a la que pertenece
+   - variable(s) de Grafana que alimenta
+   - tipo de estado que representa (actual vs histórico)
+   - contrato de salida esperado
+   - dependencias de tablas/campos
+   - supuestos y limitaciones
+5. Toda función debe diseñarse con salida estándar, salvo justificación contraria:
+   - status
+   - color
+   - evidence
+   - last_update_utc
+6. `status` debe ser la señal lógica principal.
+7. `color` debe ser una derivación estandarizada de `status`, no la fuente de verdad.
+8. `evidence` y `last_update_utc` deben usarse como soporte de trazabilidad operativa.
+9. Antes de proponer una función, aclara si está pensada para:
+   - estado actual
+   - estado histórico
+   - capa ejecutiva
+   - detalle diagnóstico
+10. No introduzcas dependencia de `$__timeFrom`, `$__timeTo`, `startQuery` o `endQuery` si la función está pensada para chips/card ejecutivos de estado actual.
+11. Si una función depende de campos opcionales en payloads JSON, diseña fallback explícito y documentado.
+12. Si una función puede ser frágil por parametrización o por alcance cross-workspace, dilo explícitamente y propone una alternativa más robusta.
+13. No dejes esqueletos vacíos sin explicación. Si falta contexto para implementar la lógica real, documenta:
+   - qué falta
+   - qué tabla/campo probable se necesita
+   - qué regla operacional debe validarse
