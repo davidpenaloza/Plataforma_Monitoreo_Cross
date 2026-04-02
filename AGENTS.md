@@ -277,3 +277,14 @@ Si hay conflicto entre:
 - y refactor técnico
 
 favorecer una solución que mantenga la estética, siempre que no aumente innecesariamente la complejidad.
+
+
+## Calidad esperada de documentación
+- No dejar documentos en estado de borrador conceptual.
+- Toda matriz debe servir como backlog técnico accionable.
+- Toda propuesta KQL debe distinguir entre:
+  - implementable ahora,
+  - esqueleto pendiente de contexto,
+  - placeholder temporal.
+- Evitar documentos ambiguos o excesivamente genéricos.
+- Cuando falte contexto para implementar lógica real, documentar exactamente qué falta y por qué.
