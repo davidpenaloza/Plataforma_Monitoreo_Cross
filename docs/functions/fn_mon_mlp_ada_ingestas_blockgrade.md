@@ -1,10 +1,10 @@
-# fn_mon_mlp_pdmcaex_global
+# fn_mon_mlp_ada_ingestas_blockgrade
 
 ## Nombre de la función
-`fn_mon_mlp_pdmcaex_global`
+`fn_mon_mlp_ada_ingestas_blockgrade`
 
 ## Objetivo
-Entregar señal global para MLP PDM CAEX consumible por el dashboard cross vía var_mlp_pdmcaex_global.
+Entregar señal ingestas para MLP ADA consumible por el dashboard cross vía var_mlp_ada_blockgrade.
 
 ## Tipo de función
 **estado actual**.
@@ -13,7 +13,7 @@ Entregar señal global para MLP PDM CAEX consumible por el dashboard cross vía 
 `ams-uat-dataplatform-laws`
 
 ## Variable(s) de Grafana que alimenta
-- `var_mlp_pdmcaex_global`
+- `var_mlp_ada_blockgrade`
 
 ## Contrato de salida esperado
 La función debe retornar 1 fila con:
@@ -30,14 +30,14 @@ Referencia esperada:
 
 ## Query wrapper en Grafana
 ```kql
-fn_mon_mlp_pdmcaex_global()
+fn_mon_mlp_ada_ingestas_blockgrade()
 | project color
 | take 1
 ```
 
 ## Query de validación
 ```kql
-fn_mon_mlp_pdmcaex_global()
+fn_mon_mlp_ada_ingestas_blockgrade()
 | project status, color, evidence, last_update_utc
 | take 1
 ```
@@ -46,16 +46,16 @@ fn_mon_mlp_pdmcaex_global()
 Azure Monitor Logs / Log Analytics
 
 ## Tabla(s) probable(s)
-SparkLoggingEvent_CL
+AzureDiagnostics, ContainerAppConsoleLogs_CL, ContainerAppSystemLogs_CL, Filtered_ContainerAppSystemLogs_CL
 
 ## Regla operacional esperada
-- Evaluar la señal más reciente por fuente/tabla relevante de MLP PDM CAEX.
+- Evaluar la señal más reciente por fuente/tabla relevante de MLP ADA.
 - `status` es la señal principal para chip/card.
 - `color` deriva de `status` (`ALERT` rojo, `OK` verde, `WARN` reservado).
 - Si no hay timestamp usable, marcar condición de riesgo en `evidence` y elevar a `ALERT`.
 
 ## Supuestos
-1. Las señales de MLP PDM CAEX están disponibles en el workspace `ams-uat-dataplatform-laws`.
+1. Las señales de MLP ADA están disponibles en el workspace `ams-uat-dataplatform-laws`.
 2. Cuando existe `payload.ultimo_timestamp`, representa tiempo de dato y puede convertirse a UTC.
 3. `TimeGenerated` funciona como fallback de estado actual.
 
@@ -66,7 +66,7 @@ SparkLoggingEvent_CL
 
 ## KQL propuesta (lista para pegar en Logs y guardar manualmente como función)
 ```kql
-// fn_mon_mlp_pdmcaex_global
+// fn_mon_mlp_ada_ingestas_blockgrade
 // Tipo: estado actual. Diseñada para ejecución en estado actual (sin $__timeFrom/$__timeTo).
 
 let source_data =
@@ -76,7 +76,7 @@ let source_data =
         (ContainerAppConsoleLogs_CL | extend _table_name="ContainerAppConsoleLogs_CL"),
         (AzureDiagnostics | extend _table_name="AzureDiagnostics")
     | where TimeGenerated >= ago(48h)
-    // Ajustar filtro de dominio/componente para MLP PDM CAEX - global
+    // Ajustar filtro de dominio/componente para MLP ADA - ingestas
     | where tostring(*) has_any ("MLP", "PDM_CAEX", "SIRO", "NASH", "ADA")
     | summarize arg_max(TimeGenerated, *) by _table_name;
 
