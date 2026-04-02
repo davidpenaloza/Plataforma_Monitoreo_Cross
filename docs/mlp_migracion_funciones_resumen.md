@@ -151,3 +151,9 @@
 - Menor costo de cómputo agregado en LAW por panel/carga de dashboard.
 - Menor latencia de render al reducir recalculo redundante.
 - Mejor mantenibilidad: umbrales/reglas base en 1-2 funciones en lugar de 11.
+
+## Evaluación crítica de impacto real en performance
+
+Se agregó una evaluación aterrizada al comportamiento real del dashboard (variables ocultas, refresh en carga, costo multi-resource y límites del rediseño por sí solo):
+
+- Ver: `docs/ada_evaluacion_critica_performance_real.md`.
