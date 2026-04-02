@@ -2,6 +2,8 @@
 
 **Workspace objetivo de creación manual:** `ams-uat-dataplatform-laws`.
 
+> Nota de organización: desde esta iteración, cada función vive en archivo propio bajo `docs/functions/` y el avance consolidado en `docs/functions/_resumen_avance_funciones.md`.
+
 ## 0) Regla operativa de creación manual (nueva política del proyecto)
 
 Para funciones KQL en Azure Monitor / Log Analytics Workspace:
