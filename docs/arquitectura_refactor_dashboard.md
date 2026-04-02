@@ -1,75 +1,158 @@
-# Refactor conservador del dashboard `Plataforma_Monitoreo_Cross`
+# Arquitectura objetivo y plan de ejecución – Dashboard Cross AMSA (segunda pasada)
 
-## Alcance y supuestos
+## 1) Resumen ejecutivo
 
-- Se mantuvo el dashboard **100% en paneles `text/html`**.
-- Se respetó el estilo actual (cards, chips, badges y headers ejecutivos).
-- No se asumió acceso real a Azure/Grafana/LAW.
-- No se introdujeron jobs, tablas resumen, DCR ni recursos nuevos.
+Esta segunda pasada consolida el refactor del dashboard cross con un enfoque **operable** para el equipo:
 
-## Problemas detectados
+- Se mantiene el diseño ejecutivo en paneles `text/html` (cards, chips, badges y headers).
+- Se elimina deuda de consistencia que aún podía generar ambigüedad (naming `cen` vs `cent`, referencias y fallback visuales).
+- Se define una arquitectura objetivo por capas **accionable** para ejecutar manualmente en `ams-uat-dataplatform-laws`, sin depender de tabla resumen ni nuevos jobs.
+- Se aterriza una hoja de ruta realista para mejora de performance y mantenibilidad sin rediseño radical.
 
-1. Referencias a variables inexistentes en múltiples paneles (principalmente CENTINELA y AMSA CROSS).
-2. Placeholders mal escritos en HTML (`${var_name}:raw}` en vez de `${var_name:raw}`).
-3. Overrides de estilo que anulaban colores dinámicos (`background:${var...}; background:#EAF4EA;`).
-4. Naming inconsistente (`var_cen_*` vs `var_cent_*`, `var_amsa_rep_ppfm` vs `var_amsa_rep_ppfm_global`).
-5. Capa 1 y 2 con chips parcialmente estáticos o inconsistentes, afectando legibilidad operativa.
+Resultado: el dashboard queda estable para operación inmediata y con una guía clara para evolucionar a wrappers KQL delgados.
 
-## Decisiones tomadas
+---
 
-### 1) Correcciones de consistencia primero (sin cambios radicales)
+## 2) Contexto y restricciones (no negociables)
 
-- Se corrigieron placeholders malformados.
-- Se homogeneizaron referencias AMSA CROSS hacia `var_amsa_rep_ppfm_global`.
-- Se eliminaron estilos duplicados que pisaban color dinámico.
+### Contexto
+El dashboard integra monitoreo cross en tres capas:
+1. Ingestas Cross.
+2. Resumen Ejecutivo.
+3. Detalle por producto.
 
-### 2) Estabilización de variables faltantes
+### Restricciones de esta etapa
+1. Mantener todo en `text/html`.
+2. Mantener estética ejecutiva actual.
+3. No introducir infraestructura nueva (jobs, tabla resumen, DCR, summary rules, pipelines auxiliares).
+4. No asumir acceso real a Azure/Grafana/LAW.
+5. Diseñar funciones para creación manual en `ams-uat-dataplatform-laws`.
 
-- Se agregaron variables faltantes como `constant` ocultas (`hide: 2`) con valor por defecto `#EAF4EA`.
-- Esto evita errores de render en Grafana y mantiene el look mientras el equipo implementa funciones KQL reales.
+---
 
-### 3) Preparación para performance/mantenibilidad
+## 3) Diagnóstico del estado actual
 
-- Se dejó el modelo listo para migrar gradualmente variables complejas a wrappers delgados contra funciones KQL externas (ver documento dedicado).
-- El refactor evita reescribir masivamente la lógica actual para no arriesgar la estética ni la operación visual.
+## 3.1 Hallazgos estructurales
+- El JSON contenía alta mezcla entre lógica operacional y presentación HTML, con repetición de patrones de chips/cards.
+- Existían referencias a variables inexistentes en bloques CENTINELA/AMSA, afectando confiabilidad de render.
+- Persistía naming inconsistente (`var_cen_*` vs `var_cent_*`) que introducía ambigüedad técnica.
 
-## Arquitectura objetivo (sin romper estado actual)
+## 3.2 Hallazgos de visualización
+- Algunos estilos tenían overrides que podían ocultar el color dinámico real.
+- Varias tarjetas de Capa 1 y Capa 2 tenían fallback visual implícito no documentado.
 
-### Capa 1: Ingestas Cross
-- Mantener cards por faena.
-- Chips con color dinámico por variable.
-- Variables delgadas orientadas a `fn_mon_<faena>_<producto>_ingestas`.
+## 3.3 Hallazgos de mantenibilidad
+- Variables de gran tamaño (KQL embebido) conviven con variables de estado simple.
+- Falta de separación explícita entre variables “productivas” y variables “fallback transitorio”.
 
-### Capa 2: Resumen Ejecutivo
-- Mantener una card por faena/producto con chips globales.
-- Variables delgadas orientadas a `fn_mon_<faena>_<producto>_global`.
+---
 
-### Capa 3: Detalle por producto
-- Mantener bloques por capa (ingestas/procesamiento/front/calidad).
-- Variables por componente (`..._<capa>_<componente>`).
-- Reutilizar funciones KQL transversales por patrón.
+## 4) Principios de diseño adoptados
 
-## Riesgos y limitaciones
+1. **Conservación visual primero**: ningún cambio que degrade look & feel.
+2. **Refactor incremental**: estabilizar referencias antes de extraer lógica.
+3. **Compatibilidad retroactiva**: evitar quiebres en paneles existentes.
+4. **Delgado en dashboard, pesado en KQL**: mover complejidad a funciones externas gradualmente.
+5. **Trazabilidad**: toda variable debe mapear a componente/capa/producto.
 
-- Las nuevas variables `constant` son una medida de estabilidad visual temporal; no reemplazan lógica de monitoreo.
-- Algunas secciones de detalle contienen HTML extenso con deuda técnica (anidaciones `<a>` y spans con sintaxis mejorable), no alteradas para evitar impacto visual.
-- El paso a funciones KQL requiere creación manual en `ams-uat-dataplatform-laws`.
+---
 
-## Cambios no implementados y por qué
+## 5) Arquitectura objetivo por capas
 
-1. **Reescritura completa del HTML de detalle:** no implementada para no romper look & feel ejecutivo.
-2. **Migración total de variables grandes actuales a wrappers KQL:** no implementada en esta iteración por riesgo funcional sin ambiente de validación real.
-3. **Normalización total de nombres legacy:** se evitó cambio masivo para no romper referencias externas no visibles en este repositorio.
+## Capa 1 – Ingestas Cross
+**Propósito:** visibilidad transversal de salud de fuentes por faena.
 
-## Dependencias externas necesarias
+**Diseño objetivo de datos:**
+- 1 variable por componente crítico (`dispatch`, `pi`, `jigsaw`, etc.).
+- Cada variable retorna color o estado normalizado (`OK/WARN/ALERT` + color).
+- Funciones KQL explícitas por producto/capa, evitando mega-funciones genéricas.
 
-- Creación manual de funciones KQL en `ams-uat-dataplatform-laws`.
-- Validación visual en Azure Managed Grafana con datos reales.
-- Validación funcional de cada variable vinculada a chips críticos.
+**Resultado esperado:** lectura rápida de degradaciones de ingesta sin abrir detalle.
 
-## Validaciones manuales pendientes
+## Capa 2 – Resumen Ejecutivo
+**Propósito:** estado ejecutivo por producto con mínima carga cognitiva.
 
-1. Confirmar color dinámico por chip en cada card de Capa 1 y Capa 2.
-2. Revisar links de detalle que abren dashboards externos.
-3. Confirmar naming final esperado por el equipo para variables CENTINELA (`cent` vs `cen`).
-4. Priorizar qué variables `constant` pasan primero a query wrapper KQL.
+**Diseño objetivo de datos:**
+- 1 variable global por producto.
+- Reglas de agregación documentadas (por ejemplo: ALERT domina WARN, WARN domina OK).
+- Reutilización de señales ya calculadas en Capa 1/3 para evitar duplicación lógica.
+
+**Resultado esperado:** un semáforo ejecutivo confiable para toma de decisión.
+
+## Capa 3 – Detalle por producto
+**Propósito:** diagnóstico accionable por subcapa (ingestas/procesamiento/front/calidad).
+
+**Diseño objetivo de datos:**
+- Variables de detalle por componente técnico.
+- Cards por subcapa con chips sólo donde haya señal real.
+- Orden estable por producto/capa/componente para facilitar mantenimiento manual.
+
+**Resultado esperado:** trazabilidad desde el resumen hasta la causa operativa.
+
+---
+
+## 6) Estrategia recomendada para esta etapa (sin tabla resumen ni job)
+
+## Fase 1 (inmediata)
+- Mantener dashboard estable con variables actuales + fallback controlado.
+- Normalizar naming y referencias.
+- Documentar cobertura real en matriz única (esta entrega).
+
+## Fase 2 (primera ola de funciones)
+- Implementar funciones para Capa 1 y Capa 2 de mayor criticidad.
+- Sustituir variables `constant` transitorias por wrappers query delgados.
+
+## Fase 3 (segunda ola)
+- Extraer detalle por producto/capa.
+- Homologar criterios de severidad y ventanas de tiempo.
+
+Esta secuencia maximiza impacto con riesgo operativo bajo.
+
+---
+
+## 7) Qué mejora realmente en performance
+
+1. **Menos duplicación de consultas** al migrar patrones repetidos a funciones KQL reutilizables.
+2. **Menos costo de render/reintentos** al eliminar referencias rotas en HTML.
+3. **Menos recomputación conceptual** al centralizar reglas de color/severidad por función.
+4. **Menor esfuerzo de diagnóstico** (impacta performance operativa del equipo).
+
+> Importante: en esta etapa no se promete optimización infra (porque no se crean tablas resumen ni jobs nuevos). La mejora es por simplificación lógica y reducción de duplicación.
+
+---
+
+## 8) Qué mejora realmente en mantenibilidad
+
+1. Naming más consistente y menos ambigüedad entre variables equivalentes.
+2. Separación clara entre estado actual y transición (fallback vs wrapper futuro).
+3. Backlog explícito por componente, prioridad y criticidad en matriz.
+4. Catálogo KQL accionable con prioridades por olas.
+
+---
+
+## 9) Riesgos reales
+
+1. **Riesgo de falso verde** en variables fallback `constant` si no se migra a wrappers reales.
+2. **Riesgo de divergencia** si distintas funciones implementan reglas de severidad diferentes.
+3. **Riesgo de regresión visual** al tocar HTML grande sin validación incremental.
+4. **Riesgo de deuda perpetua** si la ola 1 de funciones no se ejecuta en plazo.
+
+Mitigación recomendada: ejecutar migración por lotes pequeños (producto/capa), con checklist visual y funcional.
+
+---
+
+## 10) Backlog técnico sugerido
+
+1. Migrar variables fallback críticas de CENTINELA (Capa 1 y 2) a wrappers KQL reales.
+2. Estandarizar salida de funciones (`status`, `severity_rank`, `color`, `last_update_utc`).
+3. Definir convención única de ventanas temporales por tipo de señal (ingesta/procesamiento/front).
+4. Reducir HTML repetido mediante bloques plantilla internos (sin cambiar `text/html`).
+5. Limpiar deuda de sintaxis HTML no crítica en paneles de detalle (anidaciones y spans).
+
+---
+
+## 11) Conclusión ejecutiva final
+
+El dashboard queda **estable, visualmente consistente y listo para operación**, con una ruta técnica clara para evolucionar sin cambios disruptivos. La siguiente ganancia real depende de implementar la primera ola de funciones en `ams-uat-dataplatform-laws` y reemplazar fallback transitorio por señales operativas reales.
+
+En términos ejecutivos: **se redujo riesgo de quiebre visual hoy, y se habilitó mejora sostenida mañana**.
