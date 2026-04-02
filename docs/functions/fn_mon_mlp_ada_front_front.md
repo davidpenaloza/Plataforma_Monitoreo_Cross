@@ -1,10 +1,10 @@
-# fn_mon_mlp_ada_ingestas_global
+# fn_mon_mlp_ada_front_front
 
 ## Nombre de la función
-`fn_mon_mlp_ada_ingestas_global`
+`fn_mon_mlp_ada_front_front`
 
 ## Objetivo
-Estado global de ingestas ADA.
+Estado de front ADA.
 
 ## Tipo de función
 **estado actual**.
@@ -13,7 +13,7 @@ Estado global de ingestas ADA.
 `ams-uat-dataplatform-laws`
 
 ## Variable(s) de Grafana que alimenta
-- `var_mlp_ada_ingestas_global`
+- `var_mlp_ada_front`
 
 ## Contrato de salida esperado
 - `status`
@@ -27,14 +27,14 @@ Estado global de ingestas ADA.
 
 ## Query wrapper en Grafana
 ```kql
-fn_mon_mlp_ada_ingestas_global()
+fn_mon_mlp_ada_front_front()
 | project color
 | take 1
 ```
 
 ## Query de validación
 ```kql
-fn_mon_mlp_ada_ingestas_global()
+fn_mon_mlp_ada_front_front()
 | project status, color, evidence, last_update_utc
 | take 1
 ```
@@ -62,10 +62,12 @@ No recalcular bloque ADA completo en función pública; consumir funciones base 
 ## KQL propuesta (función pública simplificada)
 ```kql
 let base = fn_mon_mlp_ada_base_statusfuentes();
+let ops = fn_mon_mlp_ada_base_ops();
 base
-| extend status = iff(Dispatch=="ALERT" or PI=="ALERT" or Drillit=="ALERT" or Plans=="ALERT" or Blockgrade=="ALERT" or Meteo=="ALERT", "ALERT", "OK")
+| join kind=leftouter (ops) on 1==1
+| extend status = Front
 | extend color = case(status == "ALERT", "#E53935", "#EAF4EA")
-| extend evidence = strcat("fn=fn_mon_mlp_ada_ingestas_global; rule=iff(Dispatch=="ALERT" or PI=="ALERT" or Drillit=="ALERT" or Plans=="ALERT" or Blockgrade=="ALERT" or Meteo=="ALERT", "ALERT", "OK")")
+| extend evidence = strcat("fn=fn_mon_mlp_ada_front_front; rule=Front")
 | extend last_update_utc = now()
 | project status, color, evidence, last_update_utc
 ```

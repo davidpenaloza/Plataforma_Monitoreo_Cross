@@ -125,3 +125,29 @@
 
 ## Referencia de análisis crítico ADA
 - Ver `docs/functions/ada_analisis_performance_y_rediseno.md` para diagnóstico de duplicación, impacto en performance y propuesta de jerarquía base/dominio/pública.
+
+
+## Implementación real de eliminación de duplicación ADA (antes/después)
+
+### Antes
+- 11 funciones ADA públicas replicaban casi todo el bloque pesado de `statusFuentes`.
+- Cada wrapper de Grafana disparaba una query larga muy parecida.
+
+### Después
+- Se crearon funciones base reutilizables:
+  - `fn_mon_mlp_ada_base_statusfuentes()`
+  - `fn_mon_mlp_ada_base_ops()`
+- Las funciones públicas ADA ahora consumen funciones base y solo derivan estado puntual.
+- Se agregó `fn_mon_mlp_ada_front_front()` según nombre solicitado, más alias `fn_mon_mlp_ada_front()` para compatibilidad.
+
+### Duplicación eliminada
+- Se removió de las funciones públicas la repetición de:
+  - mapas de jobs/umbrales,
+  - bins esperados/reales,
+  - joins/acumulación/pivot completos.
+- Esa lógica queda centralizada en `fn_mon_mlp_ada_base_statusfuentes()`.
+
+### Impacto esperado
+- Menor costo de cómputo agregado en LAW por panel/carga de dashboard.
+- Menor latencia de render al reducir recalculo redundante.
+- Mejor mantenibilidad: umbrales/reglas base en 1-2 funciones en lugar de 11.
