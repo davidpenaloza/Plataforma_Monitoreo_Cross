@@ -13,6 +13,13 @@
    - `last_update_utc` (datetime)
 4. Mantener wrappers del dashboard delgados (`| project color | take 1`).
 
+### Semántica estándar de salida (obligatoria)
+
+- `status` es la **señal lógica principal** de monitoreo.
+- `color` es una **derivación estandarizada de `status`** para render visual.
+- `evidence` y `last_update_utc` son campos de **trazabilidad y soporte operativo**.
+
+
 ---
 
 ## 2) Olas de implementación
@@ -59,6 +66,9 @@ Enfocada en Capa 1 y Capa 2 para eliminar fallback transitorio.
 - **Alcance:** CENTINELA cross (ingestas).
 - **Complejidad estimada:** Media.
 - **Prioridad:** P1.
+- **Fuente probable:** Azure Monitor Logs / Log Analytics.
+- **Tabla probable:** `AzureDiagnostics` y/o `ContainerAppSystemLogs_CL` (según implementación real).
+- **Tipo de validación esperada:** visual + funcional + umbral.
 - **Observaciones:** reemplaza fallback `constant` en chips ejecutivos.
 - **Entradas necesarias para implementar:** origen de logs real, ventana esperada, regla de lateness.
 - **Esqueleto KQL:**
@@ -80,6 +90,9 @@ fn_mon_cent_cross_ingestas_dispatch() {
 - **Alcance:** Capa 1 + reutilización en detalle.
 - **Complejidad estimada:** Media.
 - **Prioridad:** P1.
+- **Fuente probable:** Azure Monitor Logs / Log Analytics.
+- **Tabla probable:** `AzureDiagnostics` o logs de integración equivalentes.
+- **Tipo de validación esperada:** visual + funcional + umbral.
 - **Observaciones:** componente transversal altamente reutilizable.
 
 ### fn_mon_cent_cross_ingestas_pi
@@ -88,6 +101,9 @@ fn_mon_cent_cross_ingestas_dispatch() {
 - **Alcance:** Capa 1 + detalle.
 - **Complejidad estimada:** Media.
 - **Prioridad:** P1.
+- **Fuente probable:** Azure Monitor Logs / Log Analytics.
+- **Tabla probable:** `AzureDiagnostics` + fuentes PI aterrizadas en LAW.
+- **Tipo de validación esperada:** visual + funcional + umbral.
 - **Observaciones:** separar datos interpolated vs recorded si aplica.
 
 ### fn_mon_cent_cross_global_mtsulf
@@ -96,6 +112,9 @@ fn_mon_cent_cross_ingestas_dispatch() {
 - **Alcance:** Capa 2.
 - **Complejidad estimada:** Baja-Media.
 - **Prioridad:** P1.
+- **Fuente probable:** Azure Monitor Logs / Log Analytics.
+- **Tabla probable:** tablas de ejecución de jobs/procesos del dominio MT Sulfuro.
+- **Tipo de validación esperada:** visual + funcional + umbral.
 - **Observaciones:** agrega señales de ingesta/procesamiento definidas por negocio.
 
 ### fn_mon_cent_cross_global_siromol
@@ -104,6 +123,9 @@ fn_mon_cent_cross_ingestas_dispatch() {
 - **Alcance:** Capa 2.
 - **Complejidad estimada:** Media.
 - **Prioridad:** P1.
+- **Fuente probable:** Azure Monitor Logs / Log Analytics.
+- **Tabla probable:** tablas de ejecución/latencia del dominio SIRO Molienda.
+- **Tipo de validación esperada:** visual + funcional + umbral.
 
 ### fn_mon_cent_cross_global_siroflot
 - **Objetivo:** semáforo ejecutivo SIRO Flotación.
@@ -111,6 +133,9 @@ fn_mon_cent_cross_ingestas_dispatch() {
 - **Alcance:** Capa 2.
 - **Complejidad estimada:** Media.
 - **Prioridad:** P1.
+- **Fuente probable:** Azure Monitor Logs / Log Analytics.
+- **Tabla probable:** tablas de ejecución/latencia del dominio SIRO Flotación.
+- **Tipo de validación esperada:** visual + funcional + umbral.
 
 ### fn_mon_cent_cross_global_ada
 - **Objetivo:** semáforo ejecutivo ADA Centinela.
@@ -118,6 +143,9 @@ fn_mon_cent_cross_ingestas_dispatch() {
 - **Alcance:** Capa 2.
 - **Complejidad estimada:** Media.
 - **Prioridad:** P1.
+- **Fuente probable:** Azure Monitor Logs / Log Analytics.
+- **Tabla probable:** tablas de ADA Centinela + métricas asociadas.
+- **Tipo de validación esperada:** visual + funcional + umbral.
 
 ### fn_mon_cent_cross_global_mtox
 - **Objetivo:** semáforo ejecutivo MT Óxidos.
@@ -125,6 +153,9 @@ fn_mon_cent_cross_ingestas_dispatch() {
 - **Alcance:** Capa 2.
 - **Complejidad estimada:** Media.
 - **Prioridad:** P1.
+- **Fuente probable:** Azure Monitor Logs / Log Analytics.
+- **Tabla probable:** tablas de MT Óxidos (ingesta/proceso/front).
+- **Tipo de validación esperada:** visual + funcional + umbral.
 
 ### fn_mon_cent_cross_global_mp10
 - **Objetivo:** semáforo ejecutivo MP10 calidad de aire.
@@ -132,6 +163,9 @@ fn_mon_cent_cross_ingestas_dispatch() {
 - **Alcance:** Capa 2.
 - **Complejidad estimada:** Media.
 - **Prioridad:** P1.
+- **Fuente probable:** Azure Monitor Logs / Log Analytics.
+- **Tabla probable:** tablas de calidad de aire / MP10 (según disponibilidad real).
+- **Tipo de validación esperada:** visual + funcional + umbral.
 
 ### fn_mon_amsa_ppfm_global
 - **Objetivo:** estado global de productos AMSA CROSS (PPFM / OPR RRHH / Portal Energía).
@@ -139,6 +173,9 @@ fn_mon_cent_cross_ingestas_dispatch() {
 - **Alcance:** Capa 1 + Capa 2 AMSA CROSS.
 - **Complejidad estimada:** Baja-Media.
 - **Prioridad:** P1.
+- **Fuente probable:** Azure Monitor Logs / Log Analytics.
+- **Tabla probable:** `AzureDiagnostics` + fuentes funcionales de PPFM/OPR/Portal en LAW.
+- **Tipo de validación esperada:** visual + funcional + umbral.
 - **Observaciones:** hoy es señal compartida; luego dividir por producto si se requiere granularidad.
 
 ## 3.2 Segunda ola

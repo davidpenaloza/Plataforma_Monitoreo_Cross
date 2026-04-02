@@ -30,6 +30,36 @@ El dashboard integra monitoreo cross en tres capas:
 
 ---
 
+
+---
+
+## Decisiones de diseño que NO se adoptan en esta etapa
+
+Para evitar sobre-ingeniería y riesgo operativo, en esta etapa **no** se adopta:
+
+1. Tabla resumen central (snapshot único).
+2. Job de consolidación dedicado.
+3. Summary rules.
+4. Data Collection Rules (DCR).
+5. Reescritura total del HTML existente.
+6. Salida de `text/html` hacia paneles estándar de Grafana.
+7. Parametrización excesiva de funciones KQL cuando fragiliza la solución.
+
+Estas decisiones son intencionales y coherentes con el objetivo de estabilizar y mejorar gradualmente sin romper el look & feel ni depender de nueva infraestructura.
+
+---
+
+## Flujo técnico extremo a extremo
+
+`LAW / logs / query` → `función KQL` → `variable Grafana` → `panel text/html` → `chip/card visible`.
+
+Lectura práctica:
+1. La señal cruda nace en logs/tablas de LAW.
+2. La función KQL normaliza `status` y deriva `color`.
+3. La variable de Grafana consume esa salida y expone el valor.
+4. El panel `text/html` pinta chip/card con el color calculado.
+5. El usuario ve estado ejecutivo sin entrar al detalle técnico.
+
 ## 3) Diagnóstico del estado actual
 
 ## 3.1 Hallazgos estructurales
