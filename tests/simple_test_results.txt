@@ -1,8 +1,0 @@
-SIMPLE SALAMANCA TEST RESULTS
-========================================
-
-Direct tool total: 2
-Agent tools used: ['search_farmacias']
-Agent success: True
-Sample pharmacy: FARMACIA MAICAO
-✅ search_farmacias found in system prompt
