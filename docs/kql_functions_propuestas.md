@@ -356,9 +356,15 @@ format_tables
 ```kql
 .create-or-alter function with (
   folder = "monitoreo/mlp/pdmcaex",
-  docstring = "Estado global PDM CAEX para dashboard cross (status, color, evidencia, última actualización)."
+  docstring = "Estado global actual PDM CAEX para dashboard cross (status, color, evidence, last_update_utc)."
 )
 fn_mon_mlp_pdmcaex_global() {
+    // -----------------------------------------------------------------------
+    // Función de estado ACTUAL (no histórica):
+    // - Evalúa la última señal disponible por fuente.
+    // - No usa $__timeFrom/$__timeTo porque su objetivo es pintar chip ejecutivo actual.
+    // -----------------------------------------------------------------------
+
     let thresholds = datatable(fuente:string, umbral_min:int)
     [
         "HOROMETROS", 10080,
@@ -379,35 +385,71 @@ fn_mon_mlp_pdmcaex_global() {
         | where fuente_detectada in ("HOROMETROS", "MINECARE", "DISPATCH")
         | summarize arg_max(TimeGenerated, *) by fuente_detectada
         | extend payload = parse_json(Message)
-        | extend fuente = tostring(payload.fuente)
-        | extend fuente = iff(isempty(fuente), fuente_detectada, toupper(fuente))
-        | extend ultimo_timestamp_fuente = datetime_local_to_utc(todatetime(payload.ultimo_timestamp), "America/Santiago")
-        | extend alertar = tostring(payload.alertar)
-        | project fuente, last_update_utc = TimeGenerated, ultimo_timestamp_fuente, alertar;
+        | extend fuente_payload = toupper(tostring(payload.fuente))
+        | extend fuente = iff(isempty(fuente_payload), fuente_detectada, fuente_payload)
+
+        // Timestamp principal (si existe y parsea): payload.ultimo_timestamp (local Chile -> UTC)
+        | extend payload_ts_raw = tostring(payload.ultimo_timestamp)
+        | extend payload_ts_utc = datetime_local_to_utc(todatetime(payload_ts_raw), "America/Santiago")
+
+        // Fallback de timestamp: TimeGenerated del evento
+        | extend event_ts_utc = TimeGenerated
+        | extend reference_ts_utc = coalesce(payload_ts_utc, event_ts_utc)
+        | extend ts_origin = iff(isnotnull(payload_ts_utc), "payload.ultimo_timestamp", "TimeGenerated")
+
+        // Normalización robusta de 'alertar'
+        | extend alertar_raw = tostring(payload.alertar)
+        | extend alertar_norm = tolower(trim(' "\t\r\n', alertar_raw))
+        | extend alertar_norm = replace_string(alertar_norm, "í", "i")
+        | extend alertar_flag = alertar_norm in ("si", "true", "1", "yes", "alert", "alerta")
+
+        // Diferencia en minutos respecto a now() usando referencia temporal validada.
+        // No usar abs(): diferencias negativas pueden evidenciar desalineación de reloj/timezone.
+        | extend diff_min_signed = datetime_diff('minute', now(), reference_ts_utc)
+        | extend delay_min = iff(diff_min_signed < 0, 0, diff_min_signed)
+        | project fuente, umbral_placeholder = 0, event_ts_utc, reference_ts_utc, ts_origin,
+                  diff_min_signed, delay_min, alertar_norm, alertar_flag;
 
     let evaluated =
         thresholds
         | join kind=leftouter latest_by_source on fuente
-        | extend Diferencia_Minutos = iff(isnull(ultimo_timestamp_fuente), 999999, datetime_diff('minute', now(), ultimo_timestamp_fuente))
-        | extend source_status = iff(alertar == "Si" or abs(Diferencia_Minutos) > umbral_min, "ALERT", "OK")
+        | extend has_ts = isnotnull(reference_ts_utc)
+        | extend source_status = case(
+            has_ts == false, "ALERT",                           // sin timestamp usable => riesgo operativo
+            alertar_flag == true, "ALERT",                      // alerta explícita del payload
+            delay_min > umbral_min, "ALERT",                    // atraso por umbral
+            "OK"
+        )
+        | extend source_reason = case(
+            has_ts == false, "timestamp_missing",
+            alertar_flag == true, strcat("alertar=", alertar_norm),
+            delay_min > umbral_min, strcat("delay_min=", tostring(delay_min), " > ", tostring(umbral_min)),
+            diff_min_signed < 0, strcat("future_ts_skew_min=", tostring(-1 * diff_min_signed)),
+            "ok"
+        )
         | extend source_evidence = strcat(
             fuente,
-            ":status=", source_status,
-            ",diff_min=", tostring(Diferencia_Minutos),
-            ",alertar=", iff(isempty(alertar), "null", alertar)
+            "{status=", source_status,
+            ",reason=", source_reason,
+            ",ts_origin=", coalesce(ts_origin, "none"),
+            ",ref_ts=", iff(isnull(reference_ts_utc), "null", tostring(reference_ts_utc)),
+            ",event_ts=", iff(isnull(event_ts_utc), "null", tostring(event_ts_utc)),
+            "}"
         );
 
     evaluated
     | summarize
         has_alert = max(iif(source_status == "ALERT", 1, 0)),
-        evidence = strcat_array(make_list(source_evidence), " | "),
-        last_update_utc = max(last_update_utc)
+        evidence_alert = strcat_array(make_list_if(source_evidence, source_status == "ALERT"), " | "),
+        evidence_all = strcat_array(make_list(source_evidence), " | "),
+        last_update_utc = max(event_ts_utc)
     | extend status = iff(has_alert == 1, "ALERT", "OK")
     | extend color = case(
         status == "ALERT", "#E53935",
         status == "WARN",  "#FFF4CC",
         "#EAF4EA"
     )
+    | extend evidence = iff(status == "ALERT", evidence_alert, strcat("OK:", evidence_all))
     | project status, color, evidence, last_update_utc
 }
 ```
@@ -435,3 +477,27 @@ fn_mon_mlp_pdmcaex_global()
   3. `WARN` no aparece en la lógica original; queda reservado para futura regla si negocio lo requiere.
   4. Si una fuente no tiene registros recientes, se fuerza `Diferencia_Minutos` alto para evitar falso verde.
 
+
+### 7.6 Nota técnica (cambios, supuestos y riesgos)
+
+- **Cambios realizados:**
+  1. Manejo robusto de timestamp con `payload.ultimo_timestamp` como referencia principal y `TimeGenerated` como fallback.
+  2. Normalización robusta de `alertar` (`si/true/1/alerta/...`).
+  3. Reemplazo de `abs(Diferencia_Minutos)` por diferencia con signo + `delay_min` para no ocultar skew de reloj/timezone.
+  4. Evidencia mejorada por fuente para explicar gatillo de estado.
+
+- **Supuestos:**
+  1. `payload.ultimo_timestamp` representa hora local Chile cuando viene informado.
+  2. `TimeGenerated` es el mejor fallback disponible para “estado actual”.
+  3. Falta de timestamp usable debe tratarse como condición de riesgo (`ALERT`) en un resumen ejecutivo.
+
+- **Riesgos pendientes:**
+  1. Algunos mensajes `Message` podrían no ser JSON válido o tener estructura inconsistente entre fuentes.
+  2. Umbrales actuales (10080/40/70) pueden no estar alineados a SLA vigentes.
+  3. Diferencias negativas de tiempo pueden reflejar relojes desalineados y no necesariamente falla de proceso.
+
+- **Qué validar con datos reales:**
+  1. Distribución real de `alertar` (valores textuales concretos) para ajustar normalización.
+  2. Calidad de `payload.ultimo_timestamp` por fuente.
+  3. Tolerancia aceptable ante timestamps futuros (skew) y tratamiento final (WARN/ALERT).
+  4. Si `last_update_utc` debe provenir de `event_ts_utc` (actual) o de `reference_ts_utc` (dato de fuente).
