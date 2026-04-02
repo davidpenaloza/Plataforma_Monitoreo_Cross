@@ -373,16 +373,4 @@ Quiero que desde ahora en este proyecto adoptes esta convención de organizació
    - última actualización
    - observaciones
 
-5. Actualiza desde ya esta estructura para:
-   - fn_mon_mlp_pdmcaex_global
-
-6. Marca explícitamente que para usar fn_mon_mlp_pdmcaex_global() desde Grafana, el resource principal debe ser:
-   - ams-uat-dataplatform-laws
-
-7. Incluye en el archivo de la función el wrapper:
-   fn_mon_mlp_pdmcaex_global()
-   | project color
-   | take 1
-
-8. No reescribas todo el proyecto.
-   Solo crea esta organización base y deja el estándar listo para seguir con las próximas funciones.
+mas funciones.
